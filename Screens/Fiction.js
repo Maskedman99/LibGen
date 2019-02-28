@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {View, ScrollView} from 'react-native';
-import {Text, ActivityIndicator, TouchableRipple, Appbar, Provider as PaperProvider, Portal, Dialog} from 'react-native-paper';
+import {Text, ActivityIndicator, TouchableRipple, Appbar, Provider as PaperProvider, Portal, Dialog, IconButton} from 'react-native-paper';
 
 
 var HTMLParser = require('fast-html-parser');
@@ -9,9 +9,11 @@ var HTMLParser = require('fast-html-parser');
 export class Fiction extends Component {
 
   state ={
-    searchQuery: '',
+    searchQuery: 'hello',
     searchIn: 'All',
+    page: 1,
     loading: true, 
+    url: '',
     root: '',
   }
 
@@ -28,6 +30,24 @@ export class Fiction extends Component {
                           }))
     .catch(err => alert('Something went wrong! Check your connection.'));
   }
+
+
+  urlfunction(i){
+    i = this.state.page + i; 
+    var url =  "http://gen.lib.rus.ec/fiction/?q=" + this.state.searchQuery.replace(' ','+') +
+    "&page=" + i; 
+    this.setState({loading:true});
+
+  axios.get(url)
+  .then(data => this.setState({
+         page: i,
+         root: HTMLParser.parse(data.data),
+         loading: false
+         }))
+  .catch(err => alert('Something went wrong! Check your connection.'));  
+  this.render();
+  }
+
 
   render() {
     var rows = this.state.loading ? [] : this.state.root.querySelectorAll('td');
@@ -67,9 +87,13 @@ export class Fiction extends Component {
         file[j] = JSON.stringify(rows[i].rawText.replace('&nbsp;',' '));
       }
     var filesfound = this.state.loading && found? '': JSON.stringify(pageinfo[0].childNodes[1].rawText.replace('&nbsp;',''));  
+
     var page = this.state.loading && found? '': pageinfo[0].childNodes[3]==undefined ? 
                   'page 1 / 1 ' : //Since page no is not shown in only 1 page cases pageinfo[0].childnode[3] doesn't exist and causes error
-                  JSON.stringify(pageinfo[0].childNodes[3].childNodes[1].rawText);  
+                  this.state.page == 1 ? 
+                        JSON.stringify(pageinfo[0].childNodes[3].childNodes[1].rawText) 
+                        :
+                        JSON.stringify(pageinfo[0].childNodes[3].childNodes[3].rawText);                      
   //  console.log(pageinfo);
 
 
@@ -101,10 +125,40 @@ export class Fiction extends Component {
             Language:{'\t\t'}{language[key].replace(/"/g,'')}
           </Text>
           <View style ={{alignItems: 'flex-end',marginRight: 10}}>
-          <Text style = {{fontWeight:'bold'}}>{key+1}</Text>
+          <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.page-1)*25)}</Text>
           </View>
           </View>
          ))
+      }
+      {pageinfo[0].childNodes[3]==undefined ?       //Case of 1 page results and multi page results  
+      <Text style = {{color: '#B40404', fontWeight:'bold', alignSelf: 'center',marginLeft:-5}}>
+                End of Results!!</Text>     
+      :
+      <View style = {{marginLeft: -10, marginVertical: -2, flexDirection:'row', justifyContent: 'space-around',}}>
+      {
+      this.state.page == 1 ?
+      <IconButton
+          icon = "chevron-left"
+          color = {'gray'}
+          size = {40}
+        />
+      :  
+      <IconButton
+          icon = "chevron-left"
+          color = {'#B40404'}
+          size = {40}
+          onPress={() => {this.urlfunction(-1);}}
+        />
+      }  
+        <Text style = {{fontWeight: 'bold', paddingBottom: 10,}}>{'\n'}{this.state.page}</Text>
+      <IconButton
+          icon = "chevron-right"
+          color = {'#B40404'}
+          size = {40}
+          onPress={() => {this.urlfunction(1);}}
+                        
+        />
+      </View>
       }
       </ScrollView> 
       </View> 

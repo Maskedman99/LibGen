@@ -89,21 +89,21 @@ export class Home extends Component {
 
         <View style={styles.radio}>
           <RadioButton value="scimag" color = '#B40404'/>
-          <TouchableWithoutFeedback onPress = {() => this.setState({genre: "second"})}>
+          <TouchableWithoutFeedback onPress = {() => this.setState({genre: "scimag"})}>
             <Text style={styles.radiotext}>Scientific Articles</Text>
           </TouchableWithoutFeedback>
         </View>
 
         <View style={styles.radio}>
           <RadioButton value="fiction" color = '#B40404'/>
-          <TouchableWithoutFeedback onPress = {() => this.setState({genre: "third"})}>
+          <TouchableWithoutFeedback onPress = {() => this.setState({genre: "fiction"})}>
             <Text style={styles.radiotext}>Fiction</Text>
           </TouchableWithoutFeedback>
         </View>
 
         <View style={styles.radio}>
           <RadioButton value="comics" color = '#B40404'/>
-          <TouchableWithoutFeedback onPress = {() => this.setState({genre: "fourth"})}>
+          <TouchableWithoutFeedback onPress = {() => this.setState({genre: "comics"})}>
             <Text style={styles.radiotext}>Comics</Text>
           </TouchableWithoutFeedback>
         </View>
