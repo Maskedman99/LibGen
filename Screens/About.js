@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView} from 'react-native';
-import { Text, Appbar, TouchableRipple, Provider as PaperProvider, Portal, Modal} from 'react-native-paper';
+import { Text, Appbar, TouchableRipple, Provider as PaperProvider, Portal, Modal, Dialog} from 'react-native-paper';
 import txt from '../Assets/aboutInfos.json'        
 
 export class Credits extends Component {
@@ -9,6 +9,7 @@ export class Credits extends Component {
     visible: false,
     visibleTC: false,
     visibleCredits: false,
+    visibleDialog: false,
   }
   _showModal = () => this.setState({ visible: true });
   _hideModal = () => this.setState({ visible: false });
@@ -16,6 +17,8 @@ export class Credits extends Component {
   _hideTC = () => this.setState({visibleTC: false});
   _showCredits = () => this.setState({visibleCredits: true});
   _hideCredits = () => this.setState({visibleCredits: false});
+  _showDialog = () => this.setState({ visibleDialog: true });
+  _hideDialog = () => this.setState({ visibleDialog: false });
 
   render() {
 
@@ -30,7 +33,7 @@ export class Credits extends Component {
         <TouchableRipple onPress={this._showModal} rippleColor="#B40404">
             <Text style = {styles.text}>Letter of Solidarity</Text>
         </TouchableRipple>   
-        <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
+        <TouchableRipple onPress={this._showDialog} rippleColor="#B40404">
             <Text style = {styles.text}>App Version</Text>
         </TouchableRipple>
         <TouchableRipple onPress={this._showTC} rippleColor="#B40404">
@@ -70,6 +73,15 @@ export class Credits extends Component {
             <Text style={{color:'lime', fontWeight:'bold', marginLeft: 5, fontSize: 15}}>{txt.Credits}{'\n\n'}</Text>
           </ScrollView>  
           </Modal>
+        </Portal>
+
+        <Portal>
+          <Dialog visible={this.state.visibleDialog}  onDismiss={this._hideDialog}>
+            <Dialog.Title>App Version</Dialog.Title>
+            <Dialog.Content>
+              <Text>{txt.Version}</Text>
+            </Dialog.Content>
+          </Dialog>
         </Portal>
 
     </PaperProvider>
