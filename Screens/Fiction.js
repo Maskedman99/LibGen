@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {View, ScrollView} from 'react-native';
-import {Text, ActivityIndicator, TouchableRipple, Appbar, Provider as PaperProvider, Portal, Dialog, IconButton} from 'react-native-paper';
+import {View, ScrollView,} from 'react-native';
+import {Text, ActivityIndicator, TouchableRipple, Appbar, Provider as PaperProvider, Portal, Dialog, IconButton,} from 'react-native-paper';
 
 
 var HTMLParser = require('fast-html-parser');
@@ -71,6 +71,7 @@ export class Fiction extends Component {
 
     
     var titles = [];
+    var links = [];
     var series = [];
     var language = [];
     var file = [];
@@ -81,6 +82,7 @@ export class Fiction extends Component {
         series[j] = JSON.stringify(rows[i].rawText.replace(/amp;/g,'').replace(/&#039;/g,"'"));
         i++;
         titles[j] = JSON.stringify(rows[i].rawText.replace(/amp;/g,'').replace(/&#039;/g,"'"));
+        links[j]  = JSON.stringify(rows[i].childNodes[0].rawAttrs.replace('href=','').replace(/"/g,''));
         i++;
         language[j] = JSON.stringify(rows[i].rawText);
         i++;
@@ -94,7 +96,7 @@ export class Fiction extends Component {
                         JSON.stringify(pageinfo[0].childNodes[3].childNodes[1].rawText) 
                         :
                         JSON.stringify(pageinfo[0].childNodes[3].childNodes[3].rawText);                      
-    console.log(pageinfo);
+    //console.log(links);
 
 
     return (
@@ -116,8 +118,10 @@ export class Fiction extends Component {
       </View>
       <ScrollView style = {{marginBottom: 90, marginLeft: 5,}}>
       { titles.map((item, key)=>(
-         <View  style={{borderBottomWidth: 1, borderBottomColor:'#B40404'}}> 
-         <Text key={key}>
+         <View  style={{borderBottomWidth: 1, borderBottomColor:'#B40404'}}>
+         <TouchableRipple onPress={() => console.log('Pressed')} rippleColor= "#B40404"> 
+         <View>
+         <Text>
             Title:{'\t\t\t\t\t\t\t'}{item.replace(/"/g,'')}{'\n'}
             Series:{'\t\t\t\t\t'}{series[key].replace(/"/g,'')}{'\n'}
             Author:{'\t\t\t\t\t'}{authors[key].replace(/"/g,'')}{'\n'}
@@ -127,6 +131,8 @@ export class Fiction extends Component {
           <View style ={{alignItems: 'flex-end',marginRight: 10}}>
           <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.page-1)*25)}</Text>
           </View>
+          </View>
+          </TouchableRipple>
           </View>
          ))
       }
