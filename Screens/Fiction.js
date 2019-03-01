@@ -119,7 +119,14 @@ export class Fiction extends Component {
       <ScrollView style = {{marginBottom: 90, marginLeft: 5,}}>
       { titles.map((item, key)=>(
          <View  style={{borderBottomWidth: 1, borderBottomColor:'#B40404'}}>
-         <TouchableRipple onPress={() => console.log('Pressed')} rippleColor= "#B40404"> 
+         <TouchableRipple onPress={() => this.props.navigation.navigate('Fiction1Screen',
+                                        {link: links[key],
+                                        title: titles[key].replace(/"/g,''),
+                                        author: authors[key].replace(/"/g,''),
+                                        series: series[key].replace(/"/g,''),
+                                        file: file[key].replace(/"/g,''),
+                                        language: language[key].replace(/"/g,'')}
+                                  )} rippleColor= "#B40404"> 
          <View>
          <Text>
             Title:{'\t\t\t\t\t\t\t'}{item.replace(/"/g,'')}{'\n'}
