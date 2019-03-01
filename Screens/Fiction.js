@@ -94,7 +94,7 @@ export class Fiction extends Component {
                         JSON.stringify(pageinfo[0].childNodes[3].childNodes[1].rawText) 
                         :
                         JSON.stringify(pageinfo[0].childNodes[3].childNodes[3].rawText);                      
-  //  console.log(pageinfo);
+    console.log(pageinfo);
 
 
     return (
@@ -151,13 +151,21 @@ export class Fiction extends Component {
         />
       }  
         <Text style = {{fontWeight: 'bold', paddingBottom: 10,}}>{'\n'}{this.state.page}</Text>
+      {
+        pageinfo[0].childNodes[3].childNodes.length == 7 || this.state.page == 1?  
       <IconButton
           icon = "chevron-right"
           color = {'#B40404'}
           size = {40}
-          onPress={() => {this.urlfunction(1);}}
-                        
+          onPress={() => {this.urlfunction(1);}}               
         />
+       :
+       <IconButton
+          icon = "chevron-right"
+          color = {'gray'}
+          size = {40}
+        /> 
+      } 
       </View>
       }
       </ScrollView> 
