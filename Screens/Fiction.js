@@ -3,7 +3,6 @@ import axios from 'axios';
 import {View, ScrollView,} from 'react-native';
 import {Text, ActivityIndicator, TouchableRipple, Appbar, Provider as PaperProvider, Portal, Dialog, IconButton,} from 'react-native-paper';
 
-
 var HTMLParser = require('fast-html-parser');
 
 export class Fiction extends Component {
