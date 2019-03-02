@@ -128,11 +128,16 @@ export class Fiction extends Component {
                                   )} rippleColor= "#B40404"> 
          <View>
          <Text>
-            Title:{'\t\t\t\t\t\t\t'}{item.replace(/"/g,'')}{'\n'}
-            Series:{'\t\t\t\t\t'}{series[key].replace(/"/g,'')}{'\n'}
-            Author:{'\t\t\t\t\t'}{authors[key].replace(/"/g,'')}{'\n'}
-            File:{'\t\t\t\t\t\t\t\t'}{file[key].replace(/"/g,'')}{'\n'}
-            Language:{'\t\t'}{language[key].replace(/"/g,'')}
+          <Text style = {{fontWeight: 'bold'}}>Title:{'\t\t\t\t\t\t\t\t'}</Text>
+              {item.replace(/"/g,'')}{'\n'}
+          <Text  style = {{fontWeight: 'bold'}}>Series:{'\t\t\t\t\t\t'}</Text>
+              {series[key].replace(/"/g,'')}{'\n'}
+          <Text style = {{fontWeight: 'bold'}}>Author:{'\t\t\t\t\t'}</Text>
+              {authors[key].replace(/"/g,'')}{'\n'}
+          <Text style = {{fontWeight: 'bold'}}>File:{'\t\t\t\t\t\t\t\t'}</Text>
+              {file[key].replace(/"/g,'')}{'\n'}
+          <Text style = {{fontWeight: 'bold'}}>Language:{'\t\t'}</Text>
+              {language[key].replace(/"/g,'')}
           </Text>
           <View style ={{alignItems: 'flex-end',marginRight: 10}}>
           <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.page-1)*25)}</Text>
