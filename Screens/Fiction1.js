@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {View,} from 'react-native';
 import {Text, TouchableRipple, Appbar, Provider as PaperProvider} from 'react-native-paper';
 
+
 export class Settings extends Component {
 
     state = {
@@ -21,6 +22,9 @@ export class Settings extends Component {
         const file = navigation.getParam('file', '');
         const language = navigation.getParam('language', '');
         this.setState({Title: title, Author: author, Series: series, Language: language, File: file});
+
+        url = "http://gen.lib.rus.ec" + link.replace(/"/g,'');
+        console.log(url);
     
       }  
 
