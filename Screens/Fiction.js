@@ -121,10 +121,7 @@ export class Fiction extends Component {
          <TouchableRipple onPress={() => this.props.navigation.navigate('Fiction1Screen',
                                         {link: links[key],
                                         title: titles[key].replace(/"/g,''),
-                                        author: authors[key].replace(/"/g,''),
-                                        series: series[key].replace(/"/g,''),
-                                        file: file[key].replace(/"/g,''),
-                                        language: language[key].replace(/"/g,'')}
+                                        author: authors[key].replace(/"/g,''),}
                                   )} rippleColor= "#B40404"> 
          <View>
          <Text>

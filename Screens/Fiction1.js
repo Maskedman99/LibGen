@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView,} from 'react-native';
 import {Text, Divider, Dialog, Portal, Button, ActivityIndicator, Appbar, Provider as PaperProvider, TouchableRipple} from 'react-native-paper';
 import Image from 'react-native-image-progress';
 import Progress from 'react-native-progress/Bar';
+import RNFetchBlob from 'rn-fetch-blob'
 
 var HTMLParser = require('fast-html-parser');
 
@@ -12,25 +13,50 @@ export class Settings extends Component {
     state = {
         Title: '',
         Author: '',
-        Series: '',
-        Language: '',
-        File: '',
+        flag: 0,
         root: '',
+        root: 1,
         loading: true,
+        loading1: true,
         visible: false,
     }
-
     _hideDialog = () => this.setState({ visible: false });
+    
+    downloadfunction(downlinks, extension ,i){
+
+      date = new Date();
+      var downurl = downlinks[i].replace(/"/g,'').replace('\\','');
+      extension = extension.toLowerCase();
+
+    //  console.log(downurl);
+
+      const { config, fs } = RNFetchBlob
+      let DownloadDir = fs.dirs.DownloadDir // this is the Downloads directory.
+      let options = {
+        fileCache: true,
+        appendExt : 'png', //Adds Extension only during the download
+        addAndroidDownloads : {
+          useDownloadManager : true, //uses the device's native download manager.
+          notification : true,
+          title : this.state.Title, // Title of download notification.
+          path:  DownloadDir + "/me_"+Math.floor(date.getTime() + date.getSeconds() / 2) + '.' + extension, // this is the path where your downloaded file will live in
+          description : 'Downloading file.'
+        }
+      }
+      config(options)
+      .fetch('GET',downurl)
+      .then((res) => {
+        //console.log("Success");
+      })
+      //http://libgen.io/foreignfiction/ads.php?md5=081CEEF60E9D24ADB3E496C0BC2EBA86/download?force=true
+    }
 
     componentDidMount(){
         const { navigation } = this.props;
         const link = navigation.getParam('link', '');
         const title = navigation.getParam('title', '');
         const author = navigation.getParam('author', '');
-        const series = navigation.getParam('series', '');
-        const file = navigation.getParam('file', '');
-        const language = navigation.getParam('language', '');
-        this.setState({Title: title, Author: author, Series: series, Language: language, File: file});
+        this.setState({Title: title, Author: author,});
 
         url = "http://gen.lib.rus.ec" + link.replace(/"/g,'');
         axios.get(url)
@@ -41,24 +67,27 @@ export class Settings extends Component {
         .catch(err => alert('Something went wrong! Check your connection.'));
       }  
 
+
+
   render() {
-
-
     if(this.state.loading == false){
       var rows = this.state.root.querySelectorAll('tr');
       var desc = this.state.root.querySelectorAll('.description');
       var imgrows = this.state.root.querySelectorAll('.record_side');
       var dlinks = this.state.root.querySelectorAll('.record_mirrors'); 
 
-        var imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs)
-        imgarr = imglink.split('\\');
-        imglink = imgarr[1].replace('"','');
+// Image link Parsing------------------------------------------------------------------------------
+      var imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs)
+      imgarr = imglink.split('\\');
+      imglink = imgarr[1].replace('"','');
 
+//Summary Parsing----------------------------------------------------------------------------------
       if(desc.length != 0){
         var summary = JSON.stringify(desc[0].rawText);
         var summary = summary.replace('"SUMMARY:',"");
       }  
 
+//Details Parsing----------------------------------------------------------------------------------
       var details = '';
       for(i=0;i<rows.length;i++)
         details = details + JSON.stringify(rows[i].rawText.replace('\n\t\t','').replace('\n\t','').replace('\n','').replace(/&nbsp;/g,' '));
@@ -70,21 +99,29 @@ export class Settings extends Component {
           detailsarr.splice(i,1)
           i = 0;
         }
-
       detailsarr.pop();
       detailsarr.pop();
       detailsarr.pop();
-
       detailsarr1 = detailsarr.splice(0,14);
+      var  ext = detailsarr[detailsarr.length - 7];  //File Extension 
 
-      dlinks = dlinks[0].childNodes;
-      dlinks.pop();
-      dlinks.shift();
+//Downlnoad Links Parsing--------------------------------------------------------------------------
+      var dlinks0 = [];
+      if(this.state.flag == 0)  // if not present every time the screen renders the values change.
+      {
+        dlinks[0].childNodes.pop();  
+        dlinks[0].childNodes.pop();       
+        dlinks[0].childNodes.shift();
+        this.setState({flag: 1});
+      }
+      dlinks0 = dlinks[0].childNodes;
 
-      var dlinks = [];
-      for(i=0;i<dlinks.length;i++)    //Rerunning this code in console will give error since dlinks is already changed after 1 st execution
-        dlinks1[i] = JSON.stringify(dlinks[i].childNodes[0].rawAttrs.replace('href=\"',''));  
-    console.log(dlinks); 
+      var dlinks1 = [];
+      for(i=0;i<dlinks0.length;i++)    
+        dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href=\"',''));   
+
+//Debugging----------------------------------------------------------------------------------------        
+    //console.log(detailsarr[detailsarr.length - 7]); 
     }  
 
     return (
@@ -159,11 +196,11 @@ export class Settings extends Component {
            visible = {this.state.visible}
            onDismiss = {this._hideDialog}>
            <Dialog.Title>Download</Dialog.Title>
+           <Divider/>
            <Dialog.Content>
-             <Button onPress={() => console.log("g")} color = "#B40404">Gen.lib.rus.ec</Button>
-             <Button onPress={() => console.log("Cancel")} color = "#B40404">Libgen.io</Button>
-             <Button onPress={() => console.log("Ok")} color = "#B40404">Libgen.pw</Button>
-             <Button onPress={() => console.log("Ok")} color = "#B40404">Torrent per 1000 files</Button>
+             <Button onPress={() => this.downloadfunction(dlinks1, ext, 0)} color = "#B40404">Gen.lib.rus.ec</Button>
+             <Button onPress={() => this.downloadfunction(dlinks1, ext, 1)} color = "#B40404">Libgen.io</Button>
+             <Button onPress={() => this.downloadfunction(dlinks1, ext, 2)} color = "#B40404">Libgen.pw</Button>
            </Dialog.Content>
          </Dialog>
         </Portal>

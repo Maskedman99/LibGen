@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, StatusBar, View, ScrollView, TouchableWithoutFeedback,} from 'react-native';
-import { FAB, Portal, Text, RadioButton, Searchbar, Provider as PaperProvider, HelperText} from 'react-native-paper';
+import {Image, StyleSheet, StatusBar, View, ScrollView, TouchableWithoutFeedback, PermissionsAndroid, Platform} from 'react-native';
+import {FAB, Portal, Text, RadioButton, Searchbar, Provider as PaperProvider, HelperText} from 'react-native-paper';
 
 export class Home extends Component {
     
@@ -14,8 +14,42 @@ export class Home extends Component {
         }
     }
 
+  componentDidMount(){
+    async function writeExternalStoragePermission() {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'LibGen Storage Permission',
+            message:
+              'LibGen needs access to writing in Storage ' +
+              'so you can download files.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('You can use the camera');
+        } else {
+          console.log('Storage permission denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+
+    if (Platform.OS === 'android') {
+      writeExternalStoragePermission();
+      }else{
+      alert('IOS device found');
+      }
+  } 
+
   render() {
     const { firstQuery } = this.state;
+
+
 
     return (
     <PaperProvider>
