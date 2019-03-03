@@ -30,7 +30,7 @@ export class Home extends Component {
           },
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('You can use the camera');
+          console.log('You can write to Storage');
         } else {
           console.log('Storage permission denied');
         }
