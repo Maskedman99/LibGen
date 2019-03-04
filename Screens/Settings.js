@@ -33,6 +33,10 @@ export class Settings extends Component {
         </TouchableRipple>
 
         <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
+            <Text style = {styles.text}>Set Search Language</Text>
+        </TouchableRipple>
+
+        <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
             <Text style = {styles.text}>Check for Updates</Text>
         </TouchableRipple>
 
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
   {
       marginLeft: 5,
       marginTop: 30,
-      fontSize: 19,
+      fontSize: 18,
       borderBottomWidth: 1,
       borderBottomColor: "#B40404"
   },
