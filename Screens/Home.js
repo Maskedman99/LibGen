@@ -67,11 +67,13 @@ export class Home extends Component {
       selectionColor="#B40404"
       enablesReturnKeyAutomatically = {true}
       onIconPress = {
+        (this.state.genre == 'scitech') ? () => this.props.navigation.navigate('SciTechScreen',{search: this.state.firstQuery, sIn: this.state.searchIn}) :
         (this.state.genre == 'fiction') ? () => this.props.navigation.navigate('FictionScreen',{search: this.state.firstQuery, sIn: this.state.searchIn}) :
         (this.state.genre == 'comics') ? () => this.props.navigation.navigate('ComicsScreen',{search: this.state.firstQuery}) :
         () => this.props.navigation.navigate('SettingScreen')
       }
       onSubmitEditing={
+        (this.state.genre == 'scitech') ? () => this.props.navigation.navigate('SciTechScreen',{search: this.state.firstQuery, sIn: this.state.searchIn}) :
         (this.state.genre == 'fiction') ? () => this.props.navigation.navigate('FictionScreen',{search: this.state.firstQuery, sIn: this.state.searchIn}) :
         (this.state.genre == 'comics') ? () => this.props.navigation.navigate('ComicsScreen',{search: this.state.firstQuery}) :
         () => this.props.navigation.navigate('SettingScreen')
@@ -115,8 +117,8 @@ export class Home extends Component {
         value={this.state.genre}>
 
         <View style = {styles.radio}>
-          <RadioButton value="first" color = '#B40404'/>
-          <TouchableWithoutFeedback onPress = {() => this.setState({genre: "first"})}>
+          <RadioButton value="scitech" color = '#B40404'/>
+          <TouchableWithoutFeedback onPress = {() => this.setState({genre: "scitech"})}>
             <Text style={styles.radiotext}>LibGen (Sci Tech)</Text>
           </TouchableWithoutFeedback>
         </View>

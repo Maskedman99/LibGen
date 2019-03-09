@@ -35,20 +35,18 @@ export class Settings extends Component {
       downurl = "http://download.library1.org/fiction/"+this.state.id.substring(0, this.state.id.length - 3)+"000/"+this.state.md5.toLocaleLowerCase()+"."+extension+"/";
       //the substring section cuts of 3 last integer of id
 
-    //  console.log(downurl);
 
       const { config, fs } = RNFetchBlob
       let DownloadDir = fs.dirs.DownloadDir // this is the Downloads directory.
       let options = {
         fileCache: true,
-      //  appendExt : extension, //Adds Extension only during the download
+        appendExt : extension, //Adds Extension only during the download
         addAndroidDownloads : {
-          useDownloadManager : true, //uses the device's native download manager.
-          notification : true,
-        //  mime: 'text/plain',
-          title : this.state.Title, // Title of download notification.
-          path:  DownloadDir +'/' + this.state.Title + '.' + extension, // this is the path where your downloaded file will live in
-          description : 'Downloading file.'
+            useDownloadManager : true, //uses the device's native download manager.
+            notification : true,
+            title : this.state.Title, // Title of download notification.
+            path:  DownloadDir +'/' + this.state.Title + '.' + extension, // this is the path where your downloaded file will live in
+            description : 'Downloading file.'
         }
       }
       config(options)

@@ -4,9 +4,10 @@ import Settings from './Screens/Settings';
 import Home from './Screens/Home';
 import About from './Screens/About';
 import Downloads from './Screens/Downloads';
-import Fiction from './Screens/Fiction';
+import Fiction from './Screens/Fiction'; 
 import Fiction1 from './Screens/Fiction1';
 import Comics from './Screens/Comics';
+import SciTech from './Screens/SciTech';
 
 const AppNavigator = createStackNavigator({
 
@@ -23,6 +24,8 @@ const AppNavigator = createStackNavigator({
   Fiction1Screen: { screen: Fiction1, navigationOptions: {header: null},},
 
   ComicsScreen: {screen: Comics, navigationOptions: {header: null},},
+
+  SciTechScreen: {screen: SciTech, navigationOptions: {header: null}},
 
 })
 
