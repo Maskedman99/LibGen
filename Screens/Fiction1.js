@@ -28,7 +28,6 @@ export class Settings extends Component {
     
     downloadfunction(downlinks, extension ,i){
 
-      date = new Date();
       var downurl = downlinks[i].replace(/"/g,'').replace('\\','');
       extension = extension.toLowerCase();
 
@@ -48,7 +47,7 @@ export class Settings extends Component {
           notification : true,
         //  mime: 'text/plain',
           title : this.state.Title, // Title of download notification.
-          path:  DownloadDir + "/me_"+Math.floor(date.getTime() + date.getSeconds() / 2) + '.' + extension, // this is the path where your downloaded file will live in
+          path:  DownloadDir +'/' + this.state.Title + '.' + extension, // this is the path where your downloaded file will live in
           description : 'Downloading file.'
         }
       }
@@ -134,7 +133,7 @@ export class Settings extends Component {
         dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href=\"',''));   
 
 //Debugging----------------------------------------------------------------------------------------        
-  //  console.log(this.state.id.substring(0, this.state.id.length - 3)); 
+    console.log(imglink); 
     }  
 
     return (
@@ -149,18 +148,26 @@ export class Settings extends Component {
       :
         <ScrollView>  
         <View style = {{width: 243, height: 363, alignSelf: 'center', justifyContent: 'center', alignItem:'center', marginTop: 10, borderWidth: 1, borderColor: '#B40404'}}>  
-        <Image
-           style={{width: 240, height: 360,}}
-           indicator={Progress.Pie}
-           indicatorProps={{
-            size: 40,
-            borderWidth: 0,
-            color: 'rgba(180, 4, 4, 1)',
-            unfilledColor: 'rgba(0, 0, 0, 0.2)'
-          }}
+        
+        {
+          imglink == "/img/blank.png" ?
+              <Image
+                      style={{width: 240, height: 360,}}
+                      resizeMode = 'cover'
+                      imageStyle = {{width: 239, height: 360}} 
+                      source={require('../Assets/blank.png')}
+                /> 
+        :
+              <Image
+                      style={{width: 240, height: 360,}}
+                      indicator={Progress.Pie}
+                      indicatorProps={{ size: 40, borderWidth: 0, color: 'rgba(180, 4, 4, 1)',
+                                        unfilledColor: 'rgba(0, 0, 0, 0.2)'}}
            resizeMode = 'cover' 
            source={{uri: imglink}}
-        /> 
+        />
+        } 
+
         </View>
         <Text style={{alignSelf: 'center', fontSize: 12}}>File Cover</Text>
 
