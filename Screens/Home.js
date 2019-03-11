@@ -8,7 +8,7 @@ export class Home extends Component {
     super(props);
        this.state = {
             firstQuery: '',
-            genre: 'first',
+            genre: 'scitech',
             searchIn: 'All',
             open: false,
         }
@@ -29,11 +29,11 @@ export class Home extends Component {
             buttonPositive: 'OK',
           },
         );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('You can write to Storage');
-        } else {
-          console.log('Storage permission denied');
-        }
+      /*  if (granted === PermissionsAndroid.RESULTS.GRANTED) 
+              console.log('You can write to Storage');
+          else 
+              console.log('Storage permission denied');
+      */  
       } catch (err) {
         console.warn(err);
       }
@@ -119,7 +119,7 @@ export class Home extends Component {
         <View style = {styles.radio}>
           <RadioButton value="scitech" color = '#B40404'/>
           <TouchableWithoutFeedback onPress = {() => this.setState({genre: "scitech"})}>
-            <Text style={styles.radiotext}>LibGen (Sci Tech)</Text>
+            <Text style={styles.radiotext}>LibGen (Sci -Tech)</Text>
           </TouchableWithoutFeedback>
         </View>
 

@@ -102,7 +102,7 @@ export class Settings extends Component {
       for(i=0;i<detailsarr.length;i++)
         if(detailsarr[i] == "" || detailsarr[i] == '\\n')
         {  
-          detailsarr.splice(i,1)
+          detailsarr.splice(i,1);
           i = 0;
         }
       detailsarr.pop();
@@ -131,7 +131,7 @@ export class Settings extends Component {
         dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href=\"',''));   
 
 //Debugging----------------------------------------------------------------------------------------        
-    console.log(imglink); 
+    //console.log(imglink); 
     }  
 
     return (
