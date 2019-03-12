@@ -52,11 +52,10 @@ export class SciTech extends Component {
           details[i].shift();
           details[i].splice(1,1);
       }   
-
+//DEBUGGING------------------------------------------------------------------------------------------------    
+      console.log(details);
       
     }
-//DEBUGGING------------------------------------------------------------------------------------------------    
-    console.log(details);
 
     return (
      <PaperProvider>
