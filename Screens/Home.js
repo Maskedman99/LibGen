@@ -194,8 +194,10 @@ const styles = StyleSheet.create({
   },
   radio1:{
     flexDirection :'row',
-    marginLeft: 15,
-    marginRight: 15,
+    marginLeft: 5,
+    marginRight: 5,
+    paddingTop: 5,
+    paddingLeft: 5,
     marginBottom: 5,
     borderBottomWidth: 1,
     borderBottomColor:"#B40404"
