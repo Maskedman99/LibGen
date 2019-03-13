@@ -119,9 +119,10 @@ export class Fiction extends Component {
       { titles.map((item, key)=>(
          <View  style={{borderBottomWidth: 1, borderBottomColor:'#B40404'}}>
          <TouchableRipple onPress={() => this.props.navigation.navigate('Fiction1Screen',
-                                        {link: links[key],
-                                        title: titles[key].replace(/"/g,''),
-                                        author: authors[key].replace(/"/g,''),}
+                                        { link: links[key],
+                                          title: titles[key].replace(/"/g,''),
+                                          author: authors[key].replace(/"/g,''),
+                                        }
                                   )} rippleColor= "#B40404"> 
          <View>
          <Text>
