@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {Text, TouchableRipple,ActivityIndicator, Appbar, Provider as PaperProvider} from 'react-native-paper';
 
 var HTMLParser = require('fast-html-parser');
@@ -31,14 +31,25 @@ export class SciTech extends Component {
   render() {
 
     var rows = this.state.loading ? [] : this.state.root.querySelectorAll('tr');
-
+    var pages = this.state.loading ? [] : this.state.root.querySelectorAll('font');
+    
     var details = []; 
 
     if(this.state.loading == false)
     {
-      var  titles = rows[0].childNodes[1].childNodes[0].childNodes[8].childNodes;  
-      //in case 1 page , else 8
-    //  console.log(rows); //7 gives no of files 
+
+      pages = pages[2].rawText.split(' ');
+
+      var titles =  pages[0] > 25 ?
+        rows[0].childNodes[1].childNodes[0].childNodes[12].childNodes
+      :  
+        rows[0].childNodes[1].childNodes[0].childNodes[8].childNodes;    
+      //in case of 1 page, details are located in index 8 
+      if(pages[0]<=25)
+        {  pages.push(''); pages.push('');
+           pages.push(''); pages.push('');
+           pages.push(0);
+        }    
 
     
 //DETAILS--------------------------------------------------------------------------------------------------
@@ -53,7 +64,7 @@ export class SciTech extends Component {
           details[i].splice(1,1);
       }   
 //DEBUGGING------------------------------------------------------------------------------------------------    
-      console.log(details);
+      console.log(rows, titles, pages);
       
     }
 
@@ -72,8 +83,9 @@ export class SciTech extends Component {
       :
         <View>
           <View style = {{marginTop:5, flexDirection:'row', justifyContent: 'space-around', borderBottomWidth: 2, borderBottomColor:'#B40404'}}>    
-            <Text style = {{fontWeight:'bold', marginBottom: 5}}>Files Found</Text>
-            <Text style = {{fontWeight:'bold', marginBottom: 5}}>Pages</Text>
+            <Text style = {{fontWeight:'bold', marginBottom: 5}}>{pages[0]} Files Found</Text>
+            <Text style = {{fontWeight:'bold', marginBottom: 5}}>
+                            Pages {Math.floor(pages[7]/25)+1}/{Math.floor(pages[0]/25)+1}</Text>
           </View>
           <ScrollView style = {{marginBottom: 90, marginLeft: 5,}}>
           { 
