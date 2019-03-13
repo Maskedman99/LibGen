@@ -21,9 +21,7 @@ export class Home extends Component {
           PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
           {
             title: 'LibGen Storage Permission',
-            message:
-              'LibGen needs access to writing in Storage ' +
-              'so you can download files.',
+            message: 'LibGen needs access to writing in Storage so you can download files.',
             buttonNeutral: 'Ask Me Later',
             buttonNegative: 'Cancel',
             buttonPositive: 'OK',
