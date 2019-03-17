@@ -48,11 +48,9 @@ export class SciTech extends Component {
   render() {
 
     var rows = this.state.loading ? [] : this.state.root.querySelectorAll('tr');
-    var pages = this.state.loading ? [] : this.state.root.querySelectorAll('font');
-    
+    var pages = this.state.loading ? [] : this.state.root.querySelectorAll('font');    
     var details = []; 
-
-    
+   
     if(this.state.loading == false)
     {
       pages = pages[2].rawText.split(' ');

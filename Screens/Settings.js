@@ -1,45 +1,49 @@
 import React, { Component } from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, Switch, TouchableRipple, Appbar, Provider as PaperProvider} from 'react-native-paper';
+import {Text, TouchableRipple, Appbar, Provider as PaperProvider} from 'react-native-paper';
+import {themes} from '../Assets/Themes';
+
+export let theme = themes.dark;
 
 export class Settings extends Component {
 
-  state = {
-    isSwitchOn: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { appTheme: themes.Dark };
+    this.changeTheme = this.changeTheme.bind(this);
+  }
+
+  changeTheme() {
+    theme = this.state.appTheme === themes.Dark ? themes.Light : themes.Dark;
+    this.setState({ appTheme: theme });
+}
 
   render() {
-    const { isSwitchOn } = this.state;
     return (
      <PaperProvider>
-
+      <View style = {{flex: 1, backgroundColor: this.state.appTheme.background}}>
       <Appbar.Header style={{backgroundColor: "#B40404"}}>
         <Appbar.BackAction  onPress = {() => this.props.navigation.goBack()}/>
         <Appbar.Content title="Settings"/>
       </Appbar.Header>
 
-        <View style={{flexDirection: 'row',justifyContent: 'space-between',borderBottomWidth: 1,borderBottomColor: "#B40404", marginLeft: 5}}>
-          <Text style = {{marginTop: 30,fontSize: 19,}}>Dark Theme</Text>
-          <Switch 
-              style = {{marginTop: 25, marginRight: 15}}
-              color='#B40404'
-              value={isSwitchOn}
-              onValueChange={() => {this.setState({ isSwitchOn: !isSwitchOn }); }}
-          />
-        </View>
-
-        <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
-            <Text style = {styles.text}>Download Location</Text>
+        <TouchableRipple rippleColor="#ff0000" 
+            onPress={this.changeTheme}>
+            <Text style = {[styles.text, {color: this.state.appTheme.text}]}>Change Theme</Text>
         </TouchableRipple>
 
-        <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
-            <Text style = {styles.text}>Set Search Language</Text>
+        <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#ff0000">
+            <Text  style = {[styles.text, {color: this.state.appTheme.text}]}>Download Location</Text>
         </TouchableRipple>
 
-        <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
-            <Text style = {styles.text}>Check for Updates</Text>
+        <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#ff0000">
+            <Text style = {[styles.text, {color: this.state.appTheme.text}]}>Set Search Language</Text>
         </TouchableRipple>
 
+        <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#ff0000">
+            <Text style = {[styles.text, {color: this.state.appTheme.text}]}>Check for Updates</Text>
+        </TouchableRipple>
+      </View>       
     </PaperProvider>
    );
   }
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
       marginTop: 30,
       fontSize: 18,
       borderBottomWidth: 1,
-      borderBottomColor: "#B40404"
+      borderBottomColor: "#ff0000",
   },
 })
 
