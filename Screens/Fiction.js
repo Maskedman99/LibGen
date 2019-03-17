@@ -44,7 +44,7 @@ export class Fiction extends Component {
          loading: false
          }))
   .catch(err => alert('Something went wrong! Check your connection.'));  
-  this.render();
+  return;
   }
 
 
@@ -145,6 +145,7 @@ export class Fiction extends Component {
           </View>
          ))
       }
+
       {pageinfo[0].childNodes[3]==undefined ?       //Case of 1 page results and multi page results  
       <Text style = {{color: '#B40404', fontWeight:'bold', alignSelf: 'center',marginLeft:-5}}>
                 End of Results!!</Text>     
@@ -152,37 +153,22 @@ export class Fiction extends Component {
       <View style = {{marginLeft: -10, marginVertical: -2, flexDirection:'row', justifyContent: 'space-around',}}>
       {
       this.state.page == 1 ?
-      <IconButton
-          icon = "chevron-left"
-          color = {'gray'}
-          size = {40}
-        />
+        <IconButton  icon = "chevron-left"  color = {'gray'}  size = {40}/>
       :  
-      <IconButton
-          icon = "chevron-left"
-          color = {'#B40404'}
-          size = {40}
-          onPress={() => {this.urlfunction(-1);}}
-        />
+        <IconButton  icon = "chevron-left"  color = {'#B40404'} size = {40}
+                     onPress={() => {this.urlfunction(-1);}}  />
       }  
-        <Text style = {{fontWeight: 'bold', paddingBottom: 10,}}>{'\n'}{this.state.page}</Text>
+      <Text style = {{fontWeight: 'bold', paddingBottom: 10,}}>{'\n'}{this.state.page}</Text>
       {
         pageinfo[0].childNodes[3].childNodes.length == 7 || this.state.page == 1?  
-      <IconButton
-          icon = "chevron-right"
-          color = {'#B40404'}
-          size = {40}
-          onPress={() => {this.urlfunction(1);}}               
-        />
+          <IconButton icon = "chevron-right"  color = {'#B40404'}  size = {40}
+                      onPress={() => {this.urlfunction(1);}} />
        :
-       <IconButton
-          icon = "chevron-right"
-          color = {'gray'}
-          size = {40}
-        /> 
+          <IconButton icon = "chevron-right"  color = {'gray'}  size = {40}  /> 
       } 
       </View>
       }
+      
       </ScrollView> 
       </View> 
     } 

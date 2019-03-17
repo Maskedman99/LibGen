@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {View, ScrollView} from 'react-native';
-import {Text, TouchableRipple,ActivityIndicator, Appbar, Provider as PaperProvider} from 'react-native-paper';
+import {Text, TouchableRipple,ActivityIndicator, Appbar, Provider as PaperProvider, IconButton} from 'react-native-paper';
 
 var HTMLParser = require('fast-html-parser');
 
@@ -9,6 +9,7 @@ export class SciTech extends Component {
 
   state ={
     searchQuery: 'hello',
+    currPage: 1,
     searchIn: 'All',
     loading: true,
     root: '',
@@ -20,12 +21,28 @@ export class SciTech extends Component {
     const searchin = navigation.getParam('sIn', 'All');
     this.setState({searchQuery: search, searchIn: searchin});
 
-    axios.get("http://gen.lib.rus.ec/search.php?req=" + search.replace(' ','+'))
+    axios.get("http://gen.lib.rus.ec/search.php?&req=" + search.replace(' ','+'))
     .then(data => this.setState({
                           root: HTMLParser.parse(data.data),
                           loading: false
                           }))
     .catch(err => alert('Something went wrong! Check your connection.'));
+  }
+
+  urlfunction(i){
+    i = this.state.currPage + i; 
+    var url =  "http://gen.lib.rus.ec/search.php?&req=" + this.state.searchQuery.replace(' ','+') +
+    "&page=" + i; 
+    this.setState({loading: true});
+
+  axios.get(url)
+  .then(data => this.setState({
+         currPage: i,
+         root: HTMLParser.parse(data.data),
+         loading: false
+         }))
+  .catch(err => alert('Something went wrong! Check your connection.'));  
+  return;
   }
 
   render() {
@@ -35,9 +52,9 @@ export class SciTech extends Component {
     
     var details = []; 
 
+    
     if(this.state.loading == false)
     {
-
       pages = pages[2].rawText.split(' ');
 
       var titles =  pages[0] > 25 ?
@@ -48,12 +65,12 @@ export class SciTech extends Component {
       if(pages[0]<=25)
         {  pages.push(''); pages.push('');
            pages.push(''); pages.push('');
-           pages.push(0);
+           pages.push(0);                   //pages[7]
         }    
-
+        var lastPage = Math.floor(pages[0]/25)+1;
     
 //DETAILS--------------------------------------------------------------------------------------------------
-      titles.shift(); 
+      titles.shift();
       for(i=0; i<titles.length-1; i++)
       { 
           titles.splice(i+1,1); //Removes all odd index elements
@@ -62,9 +79,10 @@ export class SciTech extends Component {
           details[i].splice(9,3);
           details[i].shift();
           details[i].splice(1,1);
-      }   
+      } 
+        
 //DEBUGGING------------------------------------------------------------------------------------------------    
-      console.log(rows, titles, pages);
+      console.log(details, titles);
       
     }
 
@@ -85,7 +103,7 @@ export class SciTech extends Component {
           <View style = {{marginTop:5, flexDirection:'row', justifyContent: 'space-around', borderBottomWidth: 2, borderBottomColor:'#B40404'}}>    
             <Text style = {{fontWeight:'bold', marginBottom: 5}}>{pages[0]} Files Found</Text>
             <Text style = {{fontWeight:'bold', marginBottom: 5}}>
-                            Pages {Math.floor(pages[7]/25)+1}/{Math.floor(pages[0]/25)+1}</Text>
+                            Pages {this.state.currPage}/{lastPage}</Text>
           </View>
           <ScrollView style = {{marginBottom: 90, marginLeft: 5,}}>
           { 
@@ -112,7 +130,7 @@ export class SciTech extends Component {
               </Text>
 
               <View style ={{alignItems: 'flex-end',marginRight: 10}}>
-                  <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.page-1)*25)}</Text>
+                  <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.currPage-1)*25)}</Text>
               </View>
 
               </View>
@@ -120,7 +138,31 @@ export class SciTech extends Component {
           </View>
          ))
       }
-          </ScrollView>
+
+      {
+      lastPage == 1 ?       //Case of 1 page results and multi page results  
+        <Text style = {{color: '#B40404', fontWeight:'bold', alignSelf: 'center',marginLeft:-5}}>
+                End of Results!!</Text>     
+      :
+        <View style = {{marginLeft: -10, marginVertical: -2, flexDirection:'row', justifyContent: 'space-around',}}>
+        {
+        this.state.currPage == 1 ?
+          <IconButton  icon = "chevron-left"  color = {'gray'}  size = {40}   />
+        :  
+          <IconButton  icon = "chevron-left"  color = {'#B40404'}  size = {40}
+            onPress={() => {this.urlfunction(-1);}} />
+        }  
+        <Text style = {{fontWeight: 'bold', paddingBottom: 10,}}>{'\n'}{this.state.currPage}</Text>
+        {
+        this.state.currPage != lastPage?  
+          <IconButton  icon = "chevron-right"  color = {'#B40404'}  size = {40}
+                       onPress={() => {this.urlfunction(1);}} />
+        :
+          <IconButton  icon = "chevron-right"  color = {'gray'}  size = {40}  /> 
+        } 
+        </View>
+      }  
+        </ScrollView>
         </View>
       }
 
