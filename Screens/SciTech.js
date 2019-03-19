@@ -50,6 +50,7 @@ export class SciTech extends Component {
     var rows = this.state.loading ? [] : this.state.root.querySelectorAll('tr');
     var pages = this.state.loading ? [] : this.state.root.querySelectorAll('font');    
     var details = []; 
+    var names = [];
    
     if(this.state.loading == false)
     {
@@ -60,15 +61,17 @@ export class SciTech extends Component {
       :  
         rows[0].childNodes[1].childNodes[0].childNodes[8].childNodes;    
       //in case of 1 page, details are located in index 8 
+
       if(pages[0]<=25)
         {  pages.push(''); pages.push('');
            pages.push(''); pages.push('');
            pages.push(0);                   //pages[7]
         }    
         var lastPage = Math.floor(pages[0]/25)+1;
-    
+        
 //DETAILS--------------------------------------------------------------------------------------------------
       titles.shift();
+
       for(i=0; i<titles.length-1; i++)
       { 
           titles.splice(i+1,1); //Removes all odd index elements
@@ -76,11 +79,12 @@ export class SciTech extends Component {
           details[i] = titles[i].split('\\r\\n\\t\\t\\t\\t');
           details[i].splice(9,3);
           details[i].shift();
+          names[i] = details[i][1];
           details[i].splice(1,1);
       } 
         
 //DEBUGGING------------------------------------------------------------------------------------------------    
-      console.log(details, titles);
+      console.log(names);
       
     }
 
