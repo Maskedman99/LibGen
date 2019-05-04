@@ -8,6 +8,7 @@ import Fiction from './Screens/Fiction';
 import Fiction1 from './Screens/Fiction1';
 import Comics from './Screens/Comics';
 import SciTech from './Screens/SciTech';
+import Scimag from './Screens/Scimag';
 
 const AppNavigator = createStackNavigator({
 
@@ -26,6 +27,8 @@ const AppNavigator = createStackNavigator({
   ComicsScreen: {screen: Comics, navigationOptions: {header: null},},
 
   SciTechScreen: {screen: SciTech, navigationOptions: {header: null}},
+
+  ScimagScreen: {screen: Scimag, navigationOptions: {header: null}},
 
 })
 
