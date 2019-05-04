@@ -71,6 +71,8 @@ export class SciTech extends Component {
         var lastPage = Math.floor(pages[0]/25)+1;
         
 //DETAILS--------------------------------------------------------------------------------------------------
+
+        //Need help to seperate out titles and series name
       titles.shift();
       i = 0;
       
