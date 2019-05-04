@@ -48,10 +48,10 @@ export class SciTech extends Component {
   render() {
 
     var rows = this.state.loading ? [] : this.state.root.querySelectorAll('tr');
-    var pages = this.state.loading ? [] : this.state.root.querySelectorAll('font');    
+    var pages = this.state.loading ? [] : this.state.root.querySelectorAll('font');  
     var details = []; 
     var names = [];
-   
+
     if(this.state.loading == false)
     {
       pages = pages[2].rawText.split(' ');
@@ -61,6 +61,7 @@ export class SciTech extends Component {
       :  
         rows[0].childNodes[1].childNodes[0].childNodes[8].childNodes;    
       //in case of 1 page, details are located in index 8 
+      
 
       if(pages[0]<=25)
         {  pages.push(''); pages.push('');
@@ -71,20 +72,28 @@ export class SciTech extends Component {
         
 //DETAILS--------------------------------------------------------------------------------------------------
       titles.shift();
-
+      i = 0;
+      
       for(i=0; i<titles.length-1; i++)
       { 
           titles.splice(i+1,1); //Removes all odd index elements
-          titles[i] = JSON.stringify(titles[i].rawText); 
-          details[i] = titles[i].split('\\r\\n\\t\\t\\t\\t');
+      }
+      console.log(titles);
+      var titles1 = [];
+      for(i=0; i<titles.length; i++)
+      {    
+        //  names[i]  = JSON.stringify(titles[i].childNodes[4].childNodes[2].rawText);
+        //  console.log(titles[i]);
+          titles1[i] = JSON.stringify(titles[i].rawText); 
+          details[i] = titles1[i].split('\\r\\n\\t\\t\\t\\t');
           details[i].splice(9,3);
           details[i].shift();
-          names[i] = details[i][1];
+        //  names[i] = details[i][1];
           details[i].splice(1,1);
       } 
         
 //DEBUGGING------------------------------------------------------------------------------------------------    
-      console.log(names);
+     // console.log(names);
       
     }
 
