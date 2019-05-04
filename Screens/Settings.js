@@ -13,10 +13,6 @@ export class Settings extends Component {
         <Appbar.Content title="Settings"/>
       </Appbar.Header>
 
-        <TouchableRipple rippleColor="#B40404"> 
-            <Text style = {styles.text}>Change Theme</Text>
-        </TouchableRipple>
-
         <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
             <Text  style = {styles.text}>Download Location</Text>
         </TouchableRipple>
@@ -28,6 +24,7 @@ export class Settings extends Component {
         <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
             <Text style = {styles.text}>Check for Updates</Text>
         </TouchableRipple>
+        
       </View>       
     </PaperProvider>
    );
