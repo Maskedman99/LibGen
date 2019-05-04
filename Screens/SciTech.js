@@ -125,23 +125,26 @@ export class SciTech extends Component {
               <TouchableRipple onPress={() => console.log("Pressed")} rippleColor= "#B40404"> 
               <View>
               
-              <Text>
+                <Text>
                   <Text style = {{fontWeight: 'bold'}}>Author:{'\t\t\t\t\t\t\t\t'}</Text>
                 {item[0].replace(/"/g,'')}{'\n'}
                   <Text  style = {{fontWeight: 'bold'}}>Publisher:{'\t\t\t\t\t\t'}</Text>
-                {item[1].replace(/"/g,'')}{'\n'}
+                {item[1].replace(/"/g,'').replace(/&amp;/g,'&')}{'\n'}
                   <Text style = {{fontWeight: 'bold'}}>Language:{'\t\t\t\t\t'}</Text>
-                {item[4].replace(/"/g,'')}{'\n'}
-                  <Text style = {{fontWeight: 'bold'}}>Year:{'\t\t\t\t\t\t\t\t\t\t\t'}</Text>
-                {item[2].replace(/"/g,'')}{'\t\t\t\t\t\t'}
-                  <Text style = {{fontWeight: 'bold'}}>Pages:{'\t\t\t\t\t\t\t\t\t\t\t'}</Text>
-                {item[3].replace(/"/g,'')}{'\n'}
-                  <Text style = {{fontWeight: 'bold'}}>Size:{'\t\t\t\t\t\t\t\t\t\t\t'}</Text>
-                {item[5].replace(/"/g,'')}{'\t\t\t\t\t\t'}
-                  <Text style = {{fontWeight: 'bold'}}>Extension:{'\t\t\t\t\t\t\t\t'}</Text>
-                {item[6].replace(/"/g,'')}{'\n'}    
-              </Text>
+                {item[4].replace(/"/g,'')}
+                </Text>
 
+                <Text style = {{fontSize : 12}}>
+                  <Text style = {{fontWeight: 'bold'}}>{'\n'}Year:{'\t\t'}</Text>
+                {item[2].replace(/"/g,'')}{'\t\t'}
+                  <Text style = {{fontWeight: 'bold'}}>Pages:{'\t\t'}</Text>
+                {item[3].replace(/"/g,'')}{'\t\t'}
+                  <Text style = {{fontWeight: 'bold'}}>Size:{'\t\t'}</Text>
+                {item[5].replace(/"/g,'')}{'\t\t'}
+                  <Text style = {{fontWeight: 'bold'}}>Extension:{'\t\t'}</Text>
+                {item[6].replace(/"/g,'')}
+                </Text>    
+              
               <View style ={{alignItems: 'flex-end',marginRight: 10}}>
                   <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.currPage-1)*25)}</Text>
               </View>
