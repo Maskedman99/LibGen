@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Image, StyleSheet, StatusBar, View, ScrollView, TouchableWithoutFeedback, PermissionsAndroid, Platform} from 'react-native';
+import {Image, StyleSheet, StatusBar, View, ScrollView, TouchableWithoutFeedback, PermissionsAndroid, Platform,
+              Share,} from 'react-native';
 import {FAB, Portal, Text, RadioButton, Searchbar, Provider as PaperProvider, HelperText} from 'react-native-paper';
 
 export class Home extends Component {
@@ -169,7 +170,21 @@ export class Home extends Component {
           
           actions={[
             { icon: 'share', label: 'Share', color: '#B40404', 
-                    onPress: () => console.log('Pressed add') },
+                    onPress: () =>  
+                    {
+                      Share.share(
+                        {
+                          message: 'http://gen.lib.rus.ec/  ',
+                          url: 'http://gen.lib.rus.ec/',    //Only IOS
+                          title: 'Hey there, checkout this link!'
+                        },
+                        { // Android only:
+                          dialogTitle: 'Share LibGen, spread the knowledge!',
+                          // iOS only:
+                          excludedActivityTypes: ['com.apple.UIKit.activity.PostToTwitter']
+                        }) 
+                    }                
+                  },
             { icon: 'info', label: 'About', color: '#B40404',
                     onPress: () => this.props.navigation.navigate('AboutScreen') },
             { icon: 'settings', label: 'Settings', color: '#B40404', 
