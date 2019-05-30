@@ -16,10 +16,10 @@ A material design app to download books and papers from Library Genesis on the g
 
 ## Screenshots
 <p align ="left">
-  <img src="Screenshots/1.jpg" width="240" height="480">
-  <img src="Screenshots/2.jpg" width="240" height="480">
-  <img src="Screenshots/3.jpg" width="240" height="480">
-  <img src="Screenshots/4.jpg" width="240" height="480">
+  <img src="Screenshots/1.jpg" width="250" height="480">
+  <img src="Screenshots/2.jpg" width="250" height="480">
+  <img src="Screenshots/3.jpg" width="250" height="480">
+  <img src="Screenshots/4.jpg" width="250" height="480">
 </p>
 
 ## Requirements
