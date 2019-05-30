@@ -1,5 +1,5 @@
 <p align = "center">
-  <img alt="react-native-paper" src="android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?sanitize=true" width="300">
+  <img alt="react-native-paper" src="android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png?sanitize=true" width="300">
 </p>
 
 # Libgen
@@ -16,11 +16,10 @@ A material design app to download books and papers from Library Genesis on the g
 
 ## Screenshots
 <p align ="left">
-  <img src="http://i67.tinypic.com/2wn5v9i.jpg" width="233" height="480">
-  <img src="http://i68.tinypic.com/16is80n.jpg" width="233" height="480">
-  <div>
-  <img src="http://i66.tinypic.com/2m5mc14.jpg" width="233" height="480">
-  <img src="http://i67.tinypic.com/15cyoeu.jpg" width="233" height="480">
+  <img src="Screenshots/1.jpg" width="233" height="480">
+  <img src="Screenshots/2.jpg" width="233" height="480">
+  <img src="Screenshots/3.jpg" width="233" height="480">
+  <img src="Screenshots/4.jpg" width="233" height="480">
 </p>
 
 ## Requirements
