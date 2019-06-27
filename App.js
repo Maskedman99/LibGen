@@ -10,6 +10,7 @@ import Comics from './Screens/Comics';
 import SciTech from './Screens/SciTech';
 import Scimag from './Screens/Scimag';
 import Mag from './Screens/Mag';
+import Mag1 from './Screens/Mag1'
 
 const AppNavigator = createStackNavigator({
 
@@ -27,11 +28,13 @@ const AppNavigator = createStackNavigator({
 
   ComicsScreen: {screen: Comics, navigationOptions: {header: null},},
 
-  SciTechScreen: {screen: SciTech, navigationOptions: {header: null}},
+  SciTechScreen: {screen: SciTech, navigationOptions: {header: null},},
 
   ScimagScreen: {screen: Scimag, navigationOptions: {header: null}},
 
   MagScreen: {screen: Mag, navigationOptions: {header: null},},
+
+  Mag1Screen: {screen: Mag1, navigationOptions: {header: null},},
 
 })
 

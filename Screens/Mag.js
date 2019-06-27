@@ -10,7 +10,6 @@ export class Mag extends Component {
   state ={
     searchQuery: 'hello',
     searchIn: 'All',
-    page: 1,
     loading: true, 
     url: '',
     root: '',
@@ -66,53 +65,30 @@ export class Mag extends Component {
           <Text style = {{fontWeight:'bold', marginBottom: 5}}>{rows.length}{'\t'}</Text>
       </View>
       <ScrollView style = {{marginBottom: 90, marginLeft: 5,}}>
-      { titles.map((item, key)=>(
-         <View  style={{borderBottomWidth: 1, borderBottomColor:'#B40404'}}>
-        {/* <TouchableRipple onPress={() => this.props.navigation.navigate('Fiction1Screen',
+
+      { 
+        titles.map((item, key)=>(
+        <View  style={{borderBottomWidth: 1, borderBottomColor:'#B40404'}}>
+        <TouchableRipple onPress={() => this.props.navigation.navigate('Mag1Screen',
                                         { link: links[key],
                                           title: titles[key].replace(/"/g,''),
-                                          author: authors[key].replace(/"/g,''),
                                         }
-                                    )} rippleColor= "#B40404"> */}
-         <View>
-         <Text>
-          <Text style = {{fontWeight: 'bold'}}>{item.replace(/"/g,'')}{'\n'}</Text>
-          {//<Text  style = {{fontWeight: 'bold'}}>{series[key].replace(/"/g,'')}{'\n'}</Text>
-          }
-          </Text>
-          <View style ={{alignItems: 'flex-end',marginRight: 10}}>
-          <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.page-1)*25)}</Text>
-          </View>
-          </View>
-        {//</TouchableRipple>
-        }
+                                    )} rippleColor= "#B40404"> 
+            <View>
+            <Text>
+                <Text style = {{fontWeight: 'bold'}}>{item.replace(/"/g,'')}{'\n'}</Text>
+            {   //<Text  style = {{fontWeight: 'bold'}}>{series[key].replace(/"/g,'')}{'\n'}</Text>
+            }               
+            </Text>
+            <View style ={{alignItems: 'flex-end',marginRight: 10}}>
+                    <Text style = {{fontWeight:'bold'}}>{(key+1)}</Text>
+            </View>
+            </View>
+        </TouchableRipple>
           </View>
          ))
       }
-    {/*
-      {pageinfo[0].childNodes[3]==undefined ?       //Case of 1 page results and multi page results  
-      <Text style = {{color: '#B40404', fontWeight:'bold', alignSelf: 'center',marginLeft:-5}}>
-                End of Results!!</Text>     
-      :
-      <View style = {{marginLeft: -10, marginVertical: -2, flexDirection:'row', justifyContent: 'space-around',}}>
-      {
-      this.state.page == 1 ?
-        <IconButton  icon = "chevron-left"  color = {'gray'}  size = {40}/>
-      :  
-        <IconButton  icon = "chevron-left"  color = {'#B40404'} size = {40}
-                     onPress={() => {this.urlfunction(-1);}}  />
-      }  
-      <Text style = {{fontWeight: 'bold', paddingBottom: 10,}}>{'\n'}{this.state.page}</Text>
-      {
-        pageinfo[0].childNodes[3].childNodes.length == 7 || this.state.page == 1?  
-          <IconButton icon = "chevron-right"  color = {'#B40404'}  size = {40}
-                      onPress={() => {this.urlfunction(1);}} />
-       :
-          <IconButton icon = "chevron-right"  color = {'gray'}  size = {40}  /> 
-      } 
-      </View>
-    }
-*/}  
+
       </ScrollView> 
       </View> 
     } 
