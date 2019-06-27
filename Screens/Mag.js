@@ -31,20 +31,22 @@ export class Mag extends Component {
   }
 
   render() {
-    var rows = this.state.loading ? [] : this.state.root.querySelectorAll('br');
+    var rows = this.state.loading ? [] : this.state.root.querySelectorAll('a');
+    var rows1 = this.state.loading ? [] : this.state.root.querySelectorAll('div');
     
-//    var titles = [];
-//    var links = [];
-//    if(!this.state.loading)
-//       for(i=0; i<rows.length; i++)
-//        {
-//            links[i] = JSON.stringify(rows[i].rawAttrs);
-//            links[i] = links[i].replace('"href=','').replace('"','');
-//        }    
+    var titles = [];
+    var links = [];
+    if(!this.state.loading)
+       for(i=0; i<rows.length; i++)
+        {
+            links[i] = JSON.stringify(rows[i].rawAttrs);
+            links[i] = links[i].replace('"href=','').replace('"','');
+            titles[i] = JSON.stringify(rows[i].rawText);
+        }    
     
 
     console.log(rows);
-//    console.log(links);
+    console.log(titles);
 
     return (
      <PaperProvider>
@@ -59,41 +61,35 @@ export class Mag extends Component {
            <ActivityIndicator animating={true} color="#B40404" size = {40} style={{flex:1,}}/>   
      :
      <View>
-      <View style = {{marginTop:5, flexDirection:'row', justifyContent: 'space-around', borderBottomWidth: 2, borderBottomColor:'#B40404'}}>    
-          <Text style = {{fontWeight:'bold', marginBottom: 5}}>{/*filesfound.replace(/"/g,'')*/}</Text>
-          <Text style = {{fontWeight:'bold', marginBottom: 5}}>{/*page.replace(/"/g,'')*/}</Text>
+      <View style = {{marginTop:5, flexDirection:'row', justifyContent: 'flex-end', borderBottomWidth: 2, borderBottomColor:'#B40404'}}>    
+          <Text style = {{fontWeight:'bold', marginBottom: 5}}>Files Found: </Text>
+          <Text style = {{fontWeight:'bold', marginBottom: 5}}>{rows.length}{'\t'}</Text>
       </View>
       <ScrollView style = {{marginBottom: 90, marginLeft: 5,}}>
-      {/* titles.map((item, key)=>(
+      { titles.map((item, key)=>(
          <View  style={{borderBottomWidth: 1, borderBottomColor:'#B40404'}}>
-         <TouchableRipple onPress={() => this.props.navigation.navigate('Fiction1Screen',
+        {/* <TouchableRipple onPress={() => this.props.navigation.navigate('Fiction1Screen',
                                         { link: links[key],
                                           title: titles[key].replace(/"/g,''),
                                           author: authors[key].replace(/"/g,''),
                                         }
-                                  )} rippleColor= "#B40404"> 
+                                    )} rippleColor= "#B40404"> */}
          <View>
          <Text>
-          <Text style = {{fontWeight: 'bold'}}>Title:{'\t\t\t\t\t\t\t\t'}</Text>
-              {item.replace(/"/g,'')}{'\n'}
-          <Text  style = {{fontWeight: 'bold'}}>Series:{'\t\t\t\t\t\t'}</Text>
-              {series[key].replace(/"/g,'')}{'\n'}
-          <Text style = {{fontWeight: 'bold'}}>Author:{'\t\t\t\t\t'}</Text>
-              {authors[key].replace(/"/g,'')}{'\n'}
-          <Text style = {{fontWeight: 'bold'}}>File:{'\t\t\t\t\t\t\t\t'}</Text>
-              {file[key].replace(/"/g,'')}{'\n'}
-          <Text style = {{fontWeight: 'bold'}}>Language:{'\t\t'}</Text>
-              {language[key].replace(/"/g,'')}
+          <Text style = {{fontWeight: 'bold'}}>{item.replace(/"/g,'')}{'\n'}</Text>
+          {//<Text  style = {{fontWeight: 'bold'}}>{series[key].replace(/"/g,'')}{'\n'}</Text>
+          }
           </Text>
           <View style ={{alignItems: 'flex-end',marginRight: 10}}>
           <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.page-1)*25)}</Text>
           </View>
           </View>
-          </TouchableRipple>
+        {//</TouchableRipple>
+        }
           </View>
          ))
       }
-
+    {/*
       {pageinfo[0].childNodes[3]==undefined ?       //Case of 1 page results and multi page results  
       <Text style = {{color: '#B40404', fontWeight:'bold', alignSelf: 'center',marginLeft:-5}}>
                 End of Results!!</Text>     
@@ -115,8 +111,8 @@ export class Mag extends Component {
           <IconButton icon = "chevron-right"  color = {'gray'}  size = {40}  /> 
       } 
       </View>
-    */}
-      
+    }
+*/}  
       </ScrollView> 
       </View> 
     } 
