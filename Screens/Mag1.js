@@ -23,7 +23,7 @@ export class Mag1 extends Component {
     const head = navigation.getParam('title', '');
     this.setState({searchQuery: link, headIn: head});
 
-    axios.get(this.state.searchQuery)
+    axios.get(link)
     .then(data => this.setState({
                           root: HTMLParser.parse(data.data),
                           loading: false

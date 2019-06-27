@@ -36,16 +36,20 @@ export class Mag extends Component {
     var titles = [];
     var links = [];
     if(!this.state.loading)
+    {
        for(i=0; i<rows.length; i++)
         {
             links[i] = JSON.stringify(rows[i].rawAttrs);
             links[i] = links[i].replace('"href=','').replace('"','');
             titles[i] = JSON.stringify(rows[i].rawText);
         }    
-    
 
+        rows1 = rows1[0].childNodes;
+
+    }
+
+    console.log(rows1);
     console.log(rows);
-    console.log(titles);
 
     return (
      <PaperProvider>
@@ -78,6 +82,7 @@ export class Mag extends Component {
             <Text>
                 <Text style = {{fontWeight: 'bold'}}>{item.replace(/"/g,'')}{'\n'}</Text>
             {   //<Text  style = {{fontWeight: 'bold'}}>{series[key].replace(/"/g,'')}{'\n'}</Text>
+                //Country or other details
             }               
             </Text>
             <View style ={{alignItems: 'flex-end',marginRight: 10}}>
