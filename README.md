@@ -34,3 +34,10 @@ You can find the [latest apk file here](http://gen.lib.rus.ec/) when the app is 
 
 ## Developers
 All developers are welcome to commit changes on improving the code or adding more features!
+
+## npm
+* react-native-paper
+* axios
+* fast-html-parser
+* react-native-image-progress
+* util
