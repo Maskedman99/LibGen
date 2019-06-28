@@ -11,7 +11,6 @@ export class Mag extends Component {
     searchQuery: 'hello',
     searchIn: 'All',
     loading: true, 
-    url: '',
     root: '',
   }
 
