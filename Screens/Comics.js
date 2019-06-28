@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import {View, StyleSheet} from 'react-native';
 import {Text, TouchableRipple, Appbar, Provider as PaperProvider} from 'react-native-paper';
+
+var HTMLParser = require('fast-html-parser');
 
 export class Comics extends Component {
 

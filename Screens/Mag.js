@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {View, ScrollView,} from 'react-native';
-import {Text, ActivityIndicator, TouchableRipple, Appbar, Provider as PaperProvider, Portal, Dialog, IconButton,} from 'react-native-paper';
+import {Text, ActivityIndicator, TouchableRipple, Appbar, Provider as PaperProvider,} from 'react-native-paper';
 
 var HTMLParser = require('fast-html-parser');
 
@@ -9,7 +9,6 @@ export class Mag extends Component {
 
   state ={
     searchQuery: 'hello',
-    searchIn: 'All',
     loading: true, 
     root: '',
   }
@@ -17,8 +16,7 @@ export class Mag extends Component {
   componentDidMount(){
     const { navigation } = this.props;
     const search = navigation.getParam('search', '');
-    const searchin = navigation.getParam('sIn', 'All');
-    this.setState({searchQuery: search, searchIn: searchin});
+    this.setState({searchQuery: search});
 
     axios.get("http://magzdb.org/makelist?t=" + search.replace(' ','+'))
     .then(data => this.setState({
@@ -55,7 +53,7 @@ export class Mag extends Component {
 
       <Appbar.Header style={{backgroundColor: "#B40404"}}>
         <Appbar.BackAction  onPress = {() => this.props.navigation.goBack()}/>
-        <Appbar.Content title="Magazines" subtitle={this.state.searchQuery + '\t\t.\t\t' + this.state.searchIn}/>
+        <Appbar.Content title="Magazines" subtitle={this.state.searchQuery}/>
         <Appbar.Action icon="more-vert" onPress={this._onMore} />
       </Appbar.Header>
 

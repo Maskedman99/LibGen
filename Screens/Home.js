@@ -70,7 +70,7 @@ export class Home extends Component {
         (this.state.genre == 'fiction') ? () => this.props.navigation.navigate('FictionScreen',{search: this.state.firstQuery, sIn: this.state.searchIn}) :
         (this.state.genre == 'comics') ? () => this.props.navigation.navigate('ComicsScreen',{search: this.state.firstQuery}) :
         (this.state.genre == 'scimag') ? () => this.props.navigation.navigate('ScimagScreen',{search: this.state.firstQuery, sIn: this.state.searchIn})  :
-        (this.state.genre == 'mag') ? () => this.props.navigation.navigate('MagScreen',{search: this.state.firstQuery, sIn: this.state.searchIn})  :
+        (this.state.genre == 'mag') ? () => this.props.navigation.navigate('MagScreen',{search: this.state.firstQuery})  :
         () => this.props.navigation.navigate('SettingScreen')
       }
       onSubmitEditing={
@@ -78,7 +78,7 @@ export class Home extends Component {
         (this.state.genre == 'fiction') ? () => this.props.navigation.navigate('FictionScreen',{search: this.state.firstQuery, sIn: this.state.searchIn}) :
         (this.state.genre == 'comics') ? () => this.props.navigation.navigate('ComicsScreen',{search: this.state.firstQuery}) :
         (this.state.genre == 'scimag') ? () => this.props.navigation.navigate('ScimagScreen',{search: this.state.firstQuery, sIn: this.state.searchIn})  :
-        (this.state.genre == 'mag') ? () => this.props.navigation.navigate('MagScreen',{search: this.state.firstQuery, sIn: this.state.searchIn})  :
+        (this.state.genre == 'mag') ? () => this.props.navigation.navigate('MagScreen',{search: this.state.firstQuery})  :
         () => this.props.navigation.navigate('SettingScreen')
       }
     />
