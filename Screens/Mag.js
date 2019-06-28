@@ -45,8 +45,8 @@ export class Mag extends Component {
 
     }
 
-    console.log(rows1);
-    console.log(rows);
+//    console.log(rows1);
+//    console.log(rows);
 
     return (
      <PaperProvider>
