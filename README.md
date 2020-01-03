@@ -2,13 +2,13 @@
   <img alt="react-native-paper" src="Screenshots/icon.svg?sanitize=true" width="300">
 </p>
 
-# Libgen
+<h1 align = "center">LibGen</h1>
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/Maskedman99/LibGen)
-![GNU GPLv3 License](https://img.shields.io/github/license/Maskedman99/MEC?color=lime)
-![GitHub contributors](https://img.shields.io/github/contributors/Maskedman99/MEC)
-![GitHub stars](https://img.shields.io/github/stars/Maskedman99/MEC?style=social)
-![GitHub forks](https://img.shields.io/github/forks/Maskedman99/MEC?style=social)
+![GNU GPLv3 License](https://img.shields.io/github/license/Maskedman99/LibGen?color=lime)
+![GitHub contributors](https://img.shields.io/github/contributors/Maskedman99/LibGen)
+![GitHub stars](https://img.shields.io/github/stars/Maskedman99/LibGen?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Maskedman99/LibGen?style=social)
 
 ## Currently only Fiction is working, rest are still in progress.
 
