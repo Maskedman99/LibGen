@@ -94,7 +94,7 @@ class Fiction1 extends Component {
   }
 
   render() {
-    if (this.state.loading == false) {
+    if (this.state.loading === false) {
       var rows = this.state.root.querySelectorAll('tr');
       var desc = this.state.root.querySelectorAll('.description');
       var imgrows = this.state.root.querySelectorAll('.record_side');
@@ -106,7 +106,7 @@ class Fiction1 extends Component {
       imglink = imgarr[1].replace('"', '');
 
       //Summary Parsing----------------------------------------------------------------------------------
-      if (desc.length != 0) {
+      if (desc.length !== 0) {
         var summary = JSON.stringify(desc[0].rawText);
         var summary = summary.replace('"SUMMARY:', '');
       }
@@ -136,11 +136,11 @@ class Fiction1 extends Component {
       detailsarr.pop();
       detailsarr.pop();
       var detailsarr1 = detailsarr.splice(0, 14);
-      if (this.state.Author == '') {
+      if (this.state.Author === '') {
         detailsarr.splice(3, 0, '');
       }
       var ext = detailsarr[detailsarr.length - 7]; //File Extension
-      if (this.state.flag == 0) {
+      if (this.state.flag === 0) {
         this.setState({
           md5: detailsarr1[1],
           id: detailsarr[detailsarr.length - 3],
@@ -149,7 +149,7 @@ class Fiction1 extends Component {
 
       //Downlnoad Links Parsing--------------------------------------------------------------------------
       var dlinks0 = [];
-      if (this.state.flag == 0) {
+      if (this.state.flag === 0) {
         // if not present every time the screen renders the values change.
         dlinks[0].childNodes.pop();
         dlinks[0].childNodes.pop();
