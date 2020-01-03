@@ -1,3 +1,6 @@
+/* eslint-disable */
+// need to fix eslint later
+
 import React, { Component } from 'react';
 import axios from 'axios';
 import {View, ScrollView} from 'react-native';
