@@ -203,7 +203,7 @@ class Fiction1 extends Component {
                   style={{width: 240, height: 360}}
                   resizeMode="cover"
                   imageStyle={{width: 239, height: 360}}
-                  source={require('../Assets/blank.png')}
+                  source={require('../src/Assets/blank.png')}
                 />
               ) : (
                 <Image

@@ -65,7 +65,7 @@ export class Home extends Component {
         <View style={styles.imgview}>
           <Image
             style={styles.img}
-            source={require('../Assets/LibGenLong.png')}
+            source={require('../src/Assets/LibGenLong.png')}
           />
         </View>
 
