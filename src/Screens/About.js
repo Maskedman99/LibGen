@@ -9,7 +9,7 @@ import {
   Modal,
   Dialog,
 } from 'react-native-paper';
-import txt from '../src/Assets/aboutInfos.json';
+import txt from '../Assets/aboutInfos.json';
 
 export class Credits extends Component {
   state = {

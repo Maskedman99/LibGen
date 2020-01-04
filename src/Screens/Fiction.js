@@ -96,6 +96,8 @@ export class Fiction extends Component {
     var language = [];
     var file = [];
     var authors = [];
+    var i = 6;
+    var j = 0;
     for (i = 6, j = 0; i < rows.length; i += 2, j++) {
       authors[j] = JSON.stringify(
         rows[i].rawText
@@ -131,7 +133,7 @@ export class Fiction extends Component {
         ? ''
         : pageinfo[0].childNodes[3] == undefined
         ? 'page 1 / 1 ' //Since page no is not shown in only 1 page cases pageinfo[0].childnode[3] doesn't exist and causes error
-        : this.state.page == 1
+        : this.state.page === 1
         ? JSON.stringify(pageinfo[0].childNodes[3].childNodes[1].rawText)
         : JSON.stringify(pageinfo[0].childNodes[3].childNodes[3].rawText);
     //console.log(links);
@@ -146,7 +148,7 @@ export class Fiction extends Component {
               this.state.searchQuery + '\t\t.\t\t' + this.state.searchIn
             }
           />
-          <Appbar.Action icon="more-vert" onPress={this._onMore} />
+          <Appbar.Action icon="dots-vertical" onPress={this._onMore} />
         </Appbar.Header>
 
         {this.state.loading ? (
@@ -223,7 +225,7 @@ export class Fiction extends Component {
                 </View>
               ))}
 
-              {pageinfo[0].childNodes[3] == undefined ? ( //Case of 1 page results and multi page results
+              {pageinfo[0].childNodes[3] === undefined ? ( //Case of 1 page results and multi page results
                 <Text
                   style={{
                     color: '#B40404',
@@ -237,11 +239,11 @@ export class Fiction extends Component {
                 <View
                   style={{
                     marginLeft: -10,
-                    marginVertical: -2,
+                    marginVertical: -10,
                     flexDirection: 'row',
                     justifyContent: 'space-around',
                   }}>
-                  {this.state.page == 1 ? (
+                  {this.state.page === 1 ? (
                     <IconButton icon="chevron-left" color={'gray'} size={40} />
                   ) : (
                     <IconButton
@@ -257,8 +259,8 @@ export class Fiction extends Component {
                     {'\n'}
                     {this.state.page}
                   </Text>
-                  {pageinfo[0].childNodes[3].childNodes.length == 7 ||
-                  this.state.page == 1 ? (
+                  {pageinfo[0].childNodes[3].childNodes.length === 7 ||
+                  this.state.page === 1 ? (
                     <IconButton
                       icon="chevron-right"
                       color={'#B40404'}
