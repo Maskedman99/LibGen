@@ -230,12 +230,16 @@ export class Home extends Component {
         <Portal>
           <FAB.Group
             open={this.state.open}
-            icon={this.state.open ? 'unfold-less' : 'unfold-more'}
+            icon={
+              this.state.open
+                ? 'unfold-less-horizontal'
+                : 'unfold-more-horizontal'
+            }
             fabStyle={styles.fabstyle}
             style={styles.fab}
             actions={[
               {
-                icon: 'share',
+                icon: 'share-variant',
                 label: 'Share',
                 color: '#B40404',
                 onPress: () => {
@@ -257,7 +261,7 @@ export class Home extends Component {
                 },
               },
               {
-                icon: 'info',
+                icon: 'information-variant',
                 label: 'About',
                 color: '#B40404',
                 onPress: () => this.props.navigation.navigate('AboutScreen'),
