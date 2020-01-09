@@ -12,9 +12,9 @@ class DialogComponent extends React.Component {
       <PaperProvider>
         <Portal>
           <Dialog visible={true} onDismiss={() => this.props.nav.goBack()}>
-            <Dialog.Title>File not Found</Dialog.Title>
+            <Dialog.Title>{this.props.title}</Dialog.Title>
             <Dialog.Content>
-              <Text>Retype your search query!</Text>
+              <Text>{this.props.content}</Text>
             </Dialog.Content>
           </Dialog>
         </Portal>

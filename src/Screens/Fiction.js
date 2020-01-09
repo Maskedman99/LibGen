@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {View, ScrollView, Alert} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {
   Text,
   ActivityIndicator,
@@ -28,21 +28,7 @@ export class Fiction extends Component {
       url: '',
       root: '',
     };
-  }
-
-  componentDidMount() {
-    axios
-      .get(
-        'http://gen.lib.rus.ec/fiction/?q=' +
-          this.state.searchQuery.replace(' ', '+'),
-      )
-      .then(data =>
-        this.setState({
-          root: HTMLParser.parse(data.data),
-          loading: false,
-        }),
-      )
-      .catch(err => Alert.alert(err));
+    this.urlfunction(0);
   }
 
   urlfunction(i) {
@@ -63,8 +49,7 @@ export class Fiction extends Component {
           loading: false,
         }),
       )
-      .catch(err => Alert.alert(err));
-    return;
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -78,7 +63,13 @@ export class Fiction extends Component {
     var found = true;
     if (result.length > 1) {
       found = false;
-      return <DialogComponent nav={this.props.navigation} navscreen="Home" />;
+      return (
+        <DialogComponent
+          nav={this.props.navigation}
+          title="File not Found"
+          content="Retype your search query!"
+        />
+      );
     }
 
     var titles = [];
