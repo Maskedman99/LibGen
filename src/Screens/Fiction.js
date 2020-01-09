@@ -1,44 +1,48 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, Alert} from 'react-native';
 import {
   Text,
   ActivityIndicator,
   TouchableRipple,
   Appbar,
   Provider as PaperProvider,
-  Portal,
-  Dialog,
   IconButton,
 } from 'react-native-paper';
+
+import DialogComponent from '../Components/DialogComponet';
 
 var HTMLParser = require('fast-html-parser');
 
 export class Fiction extends Component {
-  state = {
-    searchQuery: 'hello',
-    searchIn: 'All',
-    page: 1,
-    loading: true,
-    url: '',
-    root: '',
-  };
-
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     const {navigation} = this.props;
     const search = navigation.getParam('search', '');
     const searchin = navigation.getParam('sIn', 'All');
-    this.setState({searchQuery: search, searchIn: searchin});
+    this.state = {
+      searchQuery: search,
+      searchIn: searchin,
+      page: 1,
+      loading: true,
+      url: '',
+      root: '',
+    };
+  }
 
+  componentDidMount() {
     axios
-      .get('http://gen.lib.rus.ec/fiction/?q=' + search.replace(' ', '+'))
+      .get(
+        'http://gen.lib.rus.ec/fiction/?q=' +
+          this.state.searchQuery.replace(' ', '+'),
+      )
       .then(data =>
         this.setState({
           root: HTMLParser.parse(data.data),
           loading: false,
         }),
       )
-      .catch(err => alert('Something went wrong! Check your connection.'));
+      .catch(err => Alert.alert(err));
   }
 
   urlfunction(i) {
@@ -59,7 +63,7 @@ export class Fiction extends Component {
           loading: false,
         }),
       )
-      .catch(err => alert('Something went wrong! Check your connection.'));
+      .catch(err => Alert.alert(err));
     return;
   }
 
@@ -74,20 +78,7 @@ export class Fiction extends Component {
     var found = true;
     if (result.length > 1) {
       found = false;
-      return (
-        <PaperProvider>
-          <Portal>
-            <Dialog
-              visible={true}
-              onDismiss={() => this.props.navigation.goBack()}>
-              <Dialog.Title>File not Found</Dialog.Title>
-              <Dialog.Content>
-                <Text>Retype your search query!</Text>
-              </Dialog.Content>
-            </Dialog>
-          </Portal>
-        </PaperProvider>
-      );
+      return <DialogComponent nav={this.props.navigation} navscreen="Home" />;
     }
 
     var titles = [];
