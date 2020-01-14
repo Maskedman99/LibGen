@@ -11,7 +11,7 @@ import {
 
 var HTMLParser = require('fast-html-parser');
 
-export class Mag extends Component {
+class Mag extends Component {
   constructor(props) {
     super(props);
     const {navigation} = this.props;
@@ -20,9 +20,7 @@ export class Mag extends Component {
       searchQuery: search,
       loading: true,
       titles: [],
-      links: [],
-      rows: [],
-      rows1: []
+      links: []
   };
   }
   componentDidMount() {
@@ -30,9 +28,7 @@ export class Mag extends Component {
     axios
       .get('http://magzdb.org/makelist?t=' + this.state.searchQuery.replace(' ', '+'))
       .then(function(data) {
-        let root = HTMLParser.parse(data.data);
-        var rows = root.querySelectorAll('a');
-        var rows1 = root.querySelectorAll('div');
+        var rows = HTMLParser.parse(data.data).querySelectorAll('a');
 
         var titles = [];
         var links = [];
@@ -41,9 +37,8 @@ export class Mag extends Component {
           links[i] = links[i].replace('"href=', '').replace('"', '');
           titles[i] = JSON.stringify(rows[i].rawText);
         }
-        rows1 = rows1[0].childNodes;
 
-        self.setState({loading: false, titles: titles, links: links, rows: rows, rows: rows1})
+        self.setState({loading: false, titles: titles, links: links})
       })
       .catch(err => alert('Something went wrong! Check your connection.'));
   }
@@ -78,7 +73,7 @@ export class Mag extends Component {
                 Files Found:{' '}
               </Text>
               <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-                {this.state.rows.length}
+                {this.state.links.length}
                 {'\t'}
               </Text>
             </View>
