@@ -11,6 +11,7 @@ import {
 } from 'react-native-paper';
 
 import DialogComponent from '../Components/DialogComponet';
+import FictionDisplay from '../Components/FictionDisplay';
 
 var HTMLParser = require('fast-html-parser');
 
@@ -28,7 +29,11 @@ export class Fiction extends Component {
       url: '',
       root: '',
     };
+  }
+
+  componentDidMount() {
     this.urlfunction(0);
+    //Don't call this in constructor since setState might get invoked before compponent is mounted
   }
 
   urlfunction(i) {
@@ -170,39 +175,14 @@ export class Fiction extends Component {
                       })
                     }
                     rippleColor="#B40404">
-                    <View>
-                      <Text>
-                        <Text style={{fontWeight: 'bold'}}>
-                          Title:{'\t\t\t\t\t\t\t\t'}
-                        </Text>
-                        {item.replace(/"/g, '')}
-                        {'\n'}
-                        <Text style={{fontWeight: 'bold'}}>
-                          Series:{'\t\t\t\t\t\t'}
-                        </Text>
-                        {series[key].replace(/"/g, '')}
-                        {'\n'}
-                        <Text style={{fontWeight: 'bold'}}>
-                          Author:{'\t\t\t\t\t'}
-                        </Text>
-                        {authors[key].replace(/"/g, '')}
-                        {'\n'}
-                        <Text style={{fontWeight: 'bold'}}>
-                          File:{'\t\t\t\t\t\t\t\t'}
-                        </Text>
-                        {file[key].replace(/"/g, '')}
-                        {'\n'}
-                        <Text style={{fontWeight: 'bold'}}>
-                          Language:{'\t\t'}
-                        </Text>
-                        {language[key].replace(/"/g, '')}
-                      </Text>
-                      <View style={{alignItems: 'flex-end', marginRight: 10}}>
-                        <Text style={{fontWeight: 'bold'}}>
-                          {key + 1 + (this.state.page - 1) * 25}
-                        </Text>
-                      </View>
-                    </View>
+                    <FictionDisplay
+                      T={item}
+                      S={series[key]}
+                      A={authors[key]}
+                      F={file[key]}
+                      L={language[key]}
+                      no={key + 1 + (this.state.page - 1) * 25}
+                    />
                   </TouchableRipple>
                 </View>
               ))}
