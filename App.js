@@ -14,27 +14,27 @@ import Mag from './src/Screens/Mag';
 import Mag1 from './src/Screens/Mag1';
 
 const AppNavigator = createStackNavigator({
-  HomeScreen: {screen: Home, navigationOptions: {header: null}},
+  HomeScreen: {screen: Home, navigationOptions: {headerShown: false}},
 
-  SettingScreen: {screen: Settings, navigationOptions: {header: null}},
+  SettingScreen: {screen: Settings, navigationOptions: {headerShown: false}},
 
-  AboutScreen: {screen: About, navigationOptions: {header: null}},
+  AboutScreen: {screen: About, navigationOptions: {headerShown: false}},
 
-  DownloadsScreen: {screen: Downloads, navigationOptions: {header: null}},
+  DownloadsScreen: {screen: Downloads, navigationOptions: {headerShown: false}},
 
-  FictionScreen: {screen: Fiction, navigationOptions: {header: null}},
+  FictionScreen: {screen: Fiction, navigationOptions: {headerShown: false}},
 
-  Fiction1Screen: {screen: Fiction1, navigationOptions: {header: null}},
+  Fiction1Screen: {screen: Fiction1, navigationOptions: {headerShown: false}},
 
-  ComicsScreen: {screen: Comics, navigationOptions: {header: null}},
+  ComicsScreen: {screen: Comics, navigationOptions: {headerShown: false}},
 
-  SciTechScreen: {screen: SciTech, navigationOptions: {header: null}},
+  SciTechScreen: {screen: SciTech, navigationOptions: {headerShown: false}},
 
-  ScimagScreen: {screen: Scimag, navigationOptions: {header: null}},
+  ScimagScreen: {screen: Scimag, navigationOptions: {headerShown: false}},
 
-  MagScreen: {screen: Mag, navigationOptions: {header: null}},
+  MagScreen: {screen: Mag, navigationOptions: {headerShown: false}},
 
-  Mag1Screen: {screen: Mag1, navigationOptions: {header: null}},
+  Mag1Screen: {screen: Mag1, navigationOptions: {headerShown: false}},
 });
 
 const App = createAppContainer(AppNavigator);
