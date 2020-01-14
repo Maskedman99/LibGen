@@ -20,13 +20,17 @@ class Mag extends Component {
       searchQuery: search,
       loading: true,
       titles: [],
-      links: []
-  };
+      links: [],
+    };
   }
   componentDidMount() {
-    self = this;
+    // eslint-disable-next-line consistent-this
+    const self = this;
     axios
-      .get('http://magzdb.org/makelist?t=' + this.state.searchQuery.replace(' ', '+'))
+      .get(
+        'http://magzdb.org/makelist?t=' +
+          this.state.searchQuery.replace(' ', '+'),
+      )
       .then(function(data) {
         var rows = HTMLParser.parse(data.data).querySelectorAll('a');
 
@@ -38,7 +42,7 @@ class Mag extends Component {
           titles[i] = JSON.stringify(rows[i].rawText);
         }
 
-        self.setState({loading: false, titles: titles, links: links})
+        self.setState({loading: false, titles: titles, links: links});
       })
       .catch(err => alert('Something went wrong! Check your connection.'));
   }
@@ -95,10 +99,6 @@ class Mag extends Component {
                           {item.replace(/"/g, '')}
                           {'\n'}
                         </Text>
-                        {
-                          //<Text  style = {{fontWeight: 'bold'}}>{series[key].replace(/"/g,'')}{'\n'}</Text>
-                          //Country or other details
-                        }
                       </Text>
                       <View style={{alignItems: 'flex-end', marginRight: 10}}>
                         <Text style={{fontWeight: 'bold'}}>{key + 1}</Text>
