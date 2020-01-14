@@ -19,42 +19,38 @@ export class Mag extends Component {
     this.state = {
       searchQuery: search,
       loading: true,
-      root: '',
+      titles: [],
+      links: [],
+      rows: [],
+      rows1: []
   };
   }
   componentDidMount() {
+    self = this;
     axios
       .get('http://magzdb.org/makelist?t=' + this.state.searchQuery.replace(' ', '+'))
-      .then(data =>
-        this.setState({
-          root: HTMLParser.parse(data.data),
-          loading: false,
-        }),
-      )
+      .then(function(data) {
+        let root = HTMLParser.parse(data.data);
+        var rows = root.querySelectorAll('a');
+        var rows1 = root.querySelectorAll('div');
+
+        var titles = [];
+        var links = [];
+        for (var i = 0; i < rows.length; i++) {
+          links[i] = JSON.stringify(rows[i].rawAttrs);
+          links[i] = links[i].replace('"href=', '').replace('"', '');
+          titles[i] = JSON.stringify(rows[i].rawText);
+        }
+        rows1 = rows1[0].childNodes;
+
+        self.setState({loading: false, titles: titles, links: links, rows: rows, rows: rows1})
+      })
       .catch(err => alert('Something went wrong! Check your connection.'));
   }
 
   render() {
-    var rows = this.state.loading ? [] : this.state.root.querySelectorAll('a');
-    var rows1 = this.state.loading
-      ? []
-      : this.state.root.querySelectorAll('div');
-
-    var titles = [];
-    var links = [];
-    if (!this.state.loading) {
-      for (var i = 0; i < rows.length; i++) {
-        links[i] = JSON.stringify(rows[i].rawAttrs);
-        links[i] = links[i].replace('"href=', '').replace('"', '');
-        titles[i] = JSON.stringify(rows[i].rawText);
-      }
-
-      rows1 = rows1[0].childNodes;
-    }
-
     //    console.log(rows1);
     //    console.log(rows);
-
     return (
       <PaperProvider>
         <Appbar.Header style={{backgroundColor: '#B40404'}}>
@@ -84,19 +80,19 @@ export class Mag extends Component {
                 Files Found:{' '}
               </Text>
               <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-                {rows.length}
+                {this.state.rows.length}
                 {'\t'}
               </Text>
             </View>
             <ScrollView style={{marginBottom: 90, marginLeft: 5}}>
-              {titles.map((item, key) => (
+              {this.state.titles.map((item, key) => (
                 <View
                   style={{borderBottomWidth: 1, borderBottomColor: '#B40404'}}>
                   <TouchableRipple
                     onPress={() =>
                       this.props.navigation.navigate('Mag1Screen', {
-                        link: links[key],
-                        title: titles[key].replace(/"/g, ''),
+                        link: this.state.links[key],
+                        title: this.states.titles[key].replace(/"/g, ''),
                       })
                     }
                     rippleColor="#B40404">
