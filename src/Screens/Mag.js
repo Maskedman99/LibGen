@@ -49,8 +49,6 @@ export class Mag extends Component {
   }
 
   render() {
-    //    console.log(rows1);
-    //    console.log(rows);
     return (
       <PaperProvider>
         <Appbar.Header style={{backgroundColor: '#B40404'}}>
