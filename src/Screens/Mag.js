@@ -12,19 +12,19 @@ import {
 var HTMLParser = require('fast-html-parser');
 
 export class Mag extends Component {
-  state = {
-    searchQuery: 'hello',
-    loading: true,
-    root: '',
-  };
-
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     const {navigation} = this.props;
     const search = navigation.getParam('search', '');
-    this.setState({searchQuery: search});
-
+    this.state = {
+      searchQuery: search,
+      loading: true,
+      root: '',
+  };
+  }
+  componentDidMount() {
     axios
-      .get('http://magzdb.org/makelist?t=' + search.replace(' ', '+'))
+      .get('http://magzdb.org/makelist?t=' + this.state.searchQuery.replace(' ', '+'))
       .then(data =>
         this.setState({
           root: HTMLParser.parse(data.data),
