@@ -108,7 +108,7 @@ export class SciTech extends Component {
       <Appbar.Header style={{backgroundColor: "#B40404"}}>
         <Appbar.BackAction  onPress = {() => this.props.navigation.goBack()}/>
         <Appbar.Content title="LibGen (Sci-Tech)" subtitle={this.state.searchQuery + '\t\t.\t\t' + this.state.searchIn}/>
-        <Appbar.Action icon="more-vert" onPress={this._onMore} />
+        <Appbar.Action icon="dots-vertical" onPress={this._onMore} />
       </Appbar.Header>
 
       { 

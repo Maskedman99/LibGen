@@ -18,7 +18,7 @@
     "react-native": "0.61.5",
     "react-native-gesture-handler": "^1.5.3",
     "react-native-image-progress": "^1.1.1",
-    "react-native-paper": "^3.4.0",
+    "react-native-paper": "^3.4.1",
     "react-native-progress": "^4.0.3",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-vector-icons": "^6.6.0",
@@ -34,7 +34,7 @@
     "babel-jest": "^24.9.0",
     "eslint": "^6.8.0",
     "jest": "^24.9.0",
-    "metro-react-native-babel-preset": "^0.57.0",
+    "metro-react-native-babel-preset": "^0.58.0",
     "react-test-renderer": "16.12.0"
   },
   "jest": {
