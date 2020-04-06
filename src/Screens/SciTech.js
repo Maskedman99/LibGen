@@ -8,6 +8,8 @@ import {Text, TouchableRipple,ActivityIndicator, Appbar, Provider as PaperProvid
 
 var HTMLParser = require('fast-html-parser');
 
+import SciTechList from '../Components/SciTechList';
+
 export class SciTech extends Component {
 
   state ={
@@ -60,7 +62,7 @@ export class SciTech extends Component {
       pages = pages[2].rawText.split(' ');
 
       var titles =  pages[0] > 25 ?
-        rows[0].childNodes[1].childNodes[0].childNodes[12].childNodes
+        rows[0].childNodes[1].childNodes[0].childNodes[10].childNodes
       :  
         rows[0].childNodes[1].childNodes[0].childNodes[8].childNodes;    
       //in case of 1 page, details are located in index 8 
@@ -72,6 +74,7 @@ export class SciTech extends Component {
            pages.push(0);                   //pages[7]
         }    
         var lastPage = Math.floor(pages[0]/25)+1;
+        console.log(rows);
         
 //DETAILS--------------------------------------------------------------------------------------------------
 
@@ -122,41 +125,7 @@ export class SciTech extends Component {
                             Pages {this.state.currPage}/{lastPage}</Text>
           </View>
           <ScrollView style = {{marginBottom: 90, marginLeft: 5,}}>
-          { 
-            details.map((item, key)=>(
-              <View  style={{borderBottomWidth: 1, borderBottomColor:'#B40404'}}>
-              <TouchableRipple onPress={() => console.log("Pressed")} rippleColor= "#B40404"> 
-              <View>
-              
-                <Text>
-                  <Text style = {{fontWeight: 'bold'}}>Author:{'\t\t\t\t\t\t\t\t'}</Text>
-                {item[0].replace(/"/g,'')}{'\n'}
-                  <Text  style = {{fontWeight: 'bold'}}>Publisher:{'\t\t\t\t\t\t'}</Text>
-                {item[1].replace(/"/g,'').replace(/&amp;/g,'&')}{'\n'}
-                  <Text style = {{fontWeight: 'bold'}}>Language:{'\t\t\t\t\t'}</Text>
-                {item[4].replace(/"/g,'')}
-                </Text>
-
-                <Text style = {{fontSize : 12}}>
-                  <Text style = {{fontWeight: 'bold'}}>{'\n'}Year:{'\t\t'}</Text>
-                {item[2].replace(/"/g,'')}{'\t\t'}
-                  <Text style = {{fontWeight: 'bold'}}>Pages:{'\t\t'}</Text>
-                {item[3].replace(/"/g,'')}{'\t\t'}
-                  <Text style = {{fontWeight: 'bold'}}>Size:{'\t\t'}</Text>
-                {item[5].replace(/"/g,'')}{'\t\t'}
-                  <Text style = {{fontWeight: 'bold'}}>Extension:{'\t\t'}</Text>
-                {item[6].replace(/"/g,'')}
-                </Text>    
-              
-              <View style ={{alignItems: 'flex-end',marginRight: 10}}>
-                  <Text style = {{fontWeight:'bold'}}>{(key+1)+((this.state.currPage-1)*25)}</Text>
-              </View>
-
-              </View>
-              </TouchableRipple>
-          </View>
-         ))
-      }
+          <SciTechList details = {details} />
 
       {
       lastPage == 1 ?       //Case of 1 page results and multi page results  
