@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {View, ScrollView} from 'react-native';
-import {
-  Text,
-  ActivityIndicator,
-  TouchableRipple,
-  Appbar,
-  Provider as PaperProvider,
-} from 'react-native-paper';
+import {View, ScrollView, StyleSheet} from 'react-native';
+import {Alert, Text, Appbar, Provider as PaperProvider} from 'react-native-paper';
+
+import MagList from '../Components/MagList';
+import Spinner from '../Components/Spinner';
 
 var HTMLParser = require('fast-html-parser');
 
@@ -20,18 +17,15 @@ class Mag extends Component {
       searchQuery: search,
       loading: true,
       titles: [],
-      links: [],
+      links: []
     };
   }
   componentDidMount() {
     // eslint-disable-next-line consistent-this
     const self = this;
     axios
-      .get(
-        'http://magzdb.org/makelist?t=' +
-          this.state.searchQuery.replace(' ', '+'),
-      )
-      .then(function(data) {
+      .get('http://magzdb.org/makelist?t=' + this.state.searchQuery.replace(' ', '+'))
+      .then(function (data) {
         var rows = HTMLParser.parse(data.data).querySelectorAll('a');
 
         var titles = [];
@@ -44,7 +38,7 @@ class Mag extends Component {
 
         self.setState({loading: false, titles: titles, links: links});
       })
-      .catch(err => alert('Something went wrong! Check your connection.'));
+      .catch(err => Alert.alert(err));
   }
 
   render() {
@@ -53,60 +47,21 @@ class Mag extends Component {
         <Appbar.Header style={{backgroundColor: '#B40404'}}>
           <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
           <Appbar.Content title="Magazines" subtitle={this.state.searchQuery} />
-          <Appbar.Action icon="dots-vertical" onPress={this._onMore} />
         </Appbar.Header>
 
         {this.state.loading ? (
-          <ActivityIndicator
-            animating={true}
-            color="#B40404"
-            size={40}
-            style={{flex: 1}}
-          />
+          <Spinner />
         ) : (
           <View>
-            <View
-              style={{
-                marginTop: 5,
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                borderBottomWidth: 2,
-                borderBottomColor: '#B40404',
-              }}>
-              <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-                Files Found:{' '}
-              </Text>
-              <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+            <View style={styles.topContainer}>
+              <Text style={styles.textStyle}>Files Found: </Text>
+              <Text style={styles.textStyle}>
                 {this.state.links.length}
                 {'\t'}
               </Text>
             </View>
-            <ScrollView style={{marginBottom: 90, marginLeft: 5}}>
-              {this.state.titles.map((item, key) => (
-                <View
-                  style={{borderBottomWidth: 1, borderBottomColor: '#B40404'}}>
-                  <TouchableRipple
-                    onPress={() =>
-                      this.props.navigation.navigate('Mag1Screen', {
-                        link: this.state.links[key],
-                        title: this.states.titles[key].replace(/"/g, ''),
-                      })
-                    }
-                    rippleColor="#B40404">
-                    <View>
-                      <Text>
-                        <Text style={{fontWeight: 'bold'}}>
-                          {item.replace(/"/g, '')}
-                          {'\n'}
-                        </Text>
-                      </Text>
-                      <View style={{alignItems: 'flex-end', marginRight: 10}}>
-                        <Text style={{fontWeight: 'bold'}}>{key + 1}</Text>
-                      </View>
-                    </View>
-                  </TouchableRipple>
-                </View>
-              ))}
+            <ScrollView style={styles.bottomContainer}>
+              <MagList data={this.state.titles} links={this.state.links} />
             </ScrollView>
           </View>
         )}
@@ -114,5 +69,17 @@ class Mag extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  topContainer: {
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    borderBottomWidth: 2,
+    borderBottomColor: '#B40404'
+  },
+  bottomContainer: {marginBottom: 90, marginLeft: 5},
+  textStyle: {fontWeight: 'bold', marginBottom: 5}
+});
 
 export default Mag;

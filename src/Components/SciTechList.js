@@ -42,7 +42,6 @@ const SciTechList = ({details}) => {
 const styles = StyleSheet.create({
   container: {borderBottomWidth: 1, borderBottomColor: '#B40404'},
   textHead: {fontWeight: 'bold'},
-  index: {alignItems: 'flex-end', marginRight: 10},
   textNormal: {fontSize: 12}
 });
 
