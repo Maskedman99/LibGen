@@ -86,14 +86,13 @@ export class SciTech extends Component {
 
       //Need help to seperate out titles and series name
       titles.shift();
-      let i = 0;
 
-      for (i = 0; i < titles.length - 1; i++) {
+      for (let i = 0; i < titles.length - 1; i++) {
         titles.splice(i + 1, 1); //Removes all odd index elements
       }
       console.log(titles);
       var titles1 = [];
-      for (i = 0; i < titles.length; i++) {
+      for (let i = 0; i < titles.length; i++) {
         //  names[i]  = JSON.stringify(titles[i].childNodes[4].childNodes[2].rawText);
         //  console.log(titles[i]);
         titles1[i] = JSON.stringify(titles[i].rawText);
@@ -136,10 +135,10 @@ export class SciTech extends Component {
                 Pages {this.state.currPage}/{lastPage}
               </Text>
             </View>
-            <ScrollView style={{marginBottom: 90, marginLeft: 5}}>
+            <ScrollView style={{marginBottom: 90}}>
               <SciTechList details={details} />
 
-              {lastPage == 1 ? ( //Case of 1 page results and multi page results
+              {lastPage === 1 ? ( //Case of 1 page results and multi page results
                 <Text
                   style={{
                     color: '#B40404',
@@ -157,7 +156,7 @@ export class SciTech extends Component {
                     flexDirection: 'row',
                     justifyContent: 'space-around'
                   }}>
-                  {this.state.currPage == 1 ? (
+                  {this.state.currPage === 1 ? (
                     <IconButton icon="chevron-left" color={'gray'} size={40} />
                   ) : (
                     <IconButton
@@ -169,11 +168,8 @@ export class SciTech extends Component {
                       }}
                     />
                   )}
-                  <Text style={{fontWeight: 'bold', paddingBottom: 10}}>
-                    {'\n'}
-                    {this.state.currPage}
-                  </Text>
-                  {this.state.currPage != lastPage ? (
+                  <Text style={{fontWeight: 'bold', padding: 30}}>{this.state.currPage}</Text>
+                  {this.state.currPage !== lastPage ? (
                     <IconButton
                       icon="chevron-right"
                       color={'#B40404'}
