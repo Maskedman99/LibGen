@@ -9,10 +9,12 @@ import {
   Provider as PaperProvider,
   Portal,
   Dialog,
-  IconButton,
+  IconButton
 } from 'react-native-paper';
 
 var HTMLParser = require('fast-html-parser');
+import Spinner from '../Components/Spinner';
+import NavBar from '../Components/NavBar';
 
 export class Scimag extends Component {
   state = {
@@ -21,7 +23,7 @@ export class Scimag extends Component {
     page: 1,
     loading: true,
     url: '',
-    root: '',
+    root: ''
   };
 
   componentDidMount() {
@@ -35,8 +37,8 @@ export class Scimag extends Component {
       .then(data =>
         this.setState({
           root: HTMLParser.parse(data.data),
-          loading: false,
-        }),
+          loading: false
+        })
       )
       .catch(err => alert('Something went wrong! Check your connection.'));
   }
@@ -46,24 +48,13 @@ export class Scimag extends Component {
 
     return (
       <PaperProvider>
-        <Appbar.Header style={{backgroundColor: '#B40404'}}>
-          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
-          <Appbar.Content
-            title="Scientific Articles"
-            subtitle={
-              this.state.searchQuery + '\t\t.\t\t' + this.state.searchIn
-            }
-          />
-          <Appbar.Action icon="more-vert" onPress={this._onMore} />
-        </Appbar.Header>
-
+        <NavBar
+          nav={this.props.navigation}
+          title={'Scientific Articles'}
+          subtitle={`${this.state.searchQuery}\t\t.\t\t${this.state.searchIn}`}
+        />
         {this.state.loading ? (
-          <ActivityIndicator
-            animating={true}
-            color="#B40404"
-            size={40}
-            style={{flex: 1}}
-          />
+          <Spinner />
         ) : (
           <View>
             <View
@@ -72,14 +63,12 @@ export class Scimag extends Component {
                 flexDirection: 'row',
                 justifyContent: 'space-around',
                 borderBottomWidth: 2,
-                borderBottomColor: '#B40404',
+                borderBottomColor: '#B40404'
               }}>
               <Text style={{fontWeight: 'bold', marginBottom: 5}}>
                 {/*filesfound.replace(/"/g,'')*/}
               </Text>
-              <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-                {/*page.replace(/"/g,'')*/}
-              </Text>
+              <Text style={{fontWeight: 'bold', marginBottom: 5}}>{/*page.replace(/"/g,'')*/}</Text>
             </View>
             <ScrollView style={{marginBottom: 90, marginLeft: 5}}>
               {/* titles.map((item, key)=>(
