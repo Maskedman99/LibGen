@@ -6,7 +6,7 @@ import Spinner from '../Components/Spinner';
 import NavBar from '../Components/NavBar';
 
 export const Mag1 = ({navigation}) => {
-  const [loading, setLoading] = useState(true);
+  const [loading] = useState(true);
   return (
     <PaperProvider>
       <NavBar nav={navigation} title={navigation.getParam('title', '')} />

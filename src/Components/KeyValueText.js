@@ -2,15 +2,15 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text} from 'react-native-paper';
 
-const KeyValueText = ({keys, value, size}) => {
+const KeyValueText = ({Key, Value, size}) => {
   return (
     <View style={styles.container}>
       <View style={styles.keyView}>
         <Text style={[styles.keyStyle, {fontSize: size}]}>
-          {keys}:{'\t\t'}
+          {Key}:{'\t\t'}
         </Text>
       </View>
-      <Text style={{fontSize: size}}>{value}</Text>
+      <Text style={{fontSize: size}}>{Value}</Text>
     </View>
   );
 };

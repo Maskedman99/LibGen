@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {Text, TouchableRipple, Provider as PaperProvider, IconButton} from 'react-native-paper';
+import {Text, Provider as PaperProvider, IconButton} from 'react-native-paper';
 
 import DialogComponent from '../Components/DialogComponet';
 import FictionDisplay from '../Components/FictionDisplay';
@@ -54,7 +54,6 @@ export class Fiction extends Component {
         let pageinfo = root.querySelectorAll('.catalog_paginator');
         let result = root.querySelectorAll('p');
         //If no files are found to the search query then it will have an extra para stating file not found
-        console.log(rows);
         var found = true;
         if (result.length > 1) {
           found = false;
@@ -84,7 +83,6 @@ export class Fiction extends Component {
           series[j] = JSON.stringify(rows[i].rawText.replace(/amp;/g, '').replace(/&#039;/g, "'"));
           i++;
           titles[j] = JSON.stringify(rows[i].rawText.replace(/amp;/g, '').replace(/&#039;/g, "'"));
-          console.log(rows[i]);
           links[j] = JSON.stringify(
             rows[i].firstChild.rawAttrs.replace('href=', '').replace(/"/g, '')
           );
@@ -133,63 +131,24 @@ export class Fiction extends Component {
           <Spinner />
         ) : (
           <View>
-            <View
-              style={{
-                marginTop: 5,
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                borderBottomWidth: 2,
-                borderBottomColor: '#B40404'
-              }}>
-              <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-                {this.state.filesfound.replace(/"/g, '')}
-              </Text>
-              <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-                {this.state.pageX.replace(/"/g, '')}
-              </Text>
+            <View style={styles.topContainer}>
+              <Text style={styles.topContainerText}>{this.state.filesfound.replace(/"/g, '')}</Text>
+              <Text style={styles.topContainerText}>{this.state.pageX.replace(/"/g, '')}</Text>
             </View>
-            <ScrollView style={{marginBottom: 90, marginLeft: 5}}>
-              {this.state.titles.map((item, key) => (
-                <View style={{borderBottomWidth: 1, borderBottomColor: '#B40404'}}>
-                  <TouchableRipple
-                    onPress={() =>
-                      this.props.navigation.navigate('Fiction1Screen', {
-                        link: this.state.links[key],
-                        title: this.state.titles[key].replace(/"/g, ''),
-                        author: this.state.authors[key].replace(/"/g, '')
-                      })
-                    }
-                    rippleColor="#B40404">
-                    <FictionDisplay
-                      T={item}
-                      S={this.state.series[key]}
-                      A={this.state.authors[key]}
-                      F={this.state.file[key]}
-                      L={this.state.language[key]}
-                      no={key + 1 + (this.state.page - 1) * 25}
-                    />
-                  </TouchableRipple>
-                </View>
-              ))}
-
+            <ScrollView style={styles.scrollContainer}>
+              <FictionDisplay
+                T={this.state.titles}
+                S={this.state.series}
+                A={this.state.authors}
+                F={this.state.file}
+                La={this.state.language}
+                Li={this.state.links}
+                nav={this.props.navigation}
+              />
               {this.state.pageinfo[0].childNodes[3] === undefined ? ( //Case of 1 page results and multi page results
-                <Text
-                  style={{
-                    color: '#B40404',
-                    fontWeight: 'bold',
-                    alignSelf: 'center',
-                    marginLeft: -5
-                  }}>
-                  End of Results!!
-                </Text>
+                <Text style={styles.endText}>End of Results!!</Text>
               ) : (
-                <View
-                  style={{
-                    marginLeft: -10,
-                    marginVertical: -10,
-                    flexDirection: 'row',
-                    justifyContent: 'space-around'
-                  }}>
+                <View style={styles.pageContainer}>
                   {this.state.page === 1 ? (
                     <IconButton icon="chevron-left" color={'gray'} size={40} />
                   ) : (
@@ -202,7 +161,7 @@ export class Fiction extends Component {
                       }}
                     />
                   )}
-                  <Text style={{fontWeight: 'bold', paddingBottom: 10}}>
+                  <Text style={styles.pageText}>
                     {'\n'}
                     {this.state.page}
                   </Text>
@@ -228,5 +187,30 @@ export class Fiction extends Component {
     );
   }
 }
+
+export const styles = StyleSheet.create({
+  topContainer: {
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderBottomWidth: 2,
+    borderBottomColor: '#B40404'
+  },
+  endText: {
+    color: '#B40404',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginLeft: -5
+  },
+  pageContainer: {
+    marginLeft: -10,
+    marginVertical: -10,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  topContainerText: {fontWeight: 'bold', marginBottom: 5},
+  scrollContainer: {marginBottom: 90},
+  pageText: {fontWeight: 'bold', paddingBottom: 10}
+});
 
 export default Fiction;

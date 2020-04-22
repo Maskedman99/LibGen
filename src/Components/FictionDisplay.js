@@ -1,43 +1,35 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text} from 'react-native-paper';
+import {TouchableRipple} from 'react-native-paper';
 
-class FictionDisplay extends React.Component {
-  render() {
-    return (
-      <View>
-        <Text>
-          <Text style={styles.textstyle}>Title:{'\t\t\t\t\t\t\t\t'}</Text>
-          {this.props.T.replace(/"/g, '')}
-          {'\n'}
-          <Text style={styles.textstyle}>Series:{'\t\t\t\t\t\t'}</Text>
-          {this.props.S.replace(/"/g, '')}
-          {'\n'}
-          <Text style={styles.textstyle}>Author:{'\t\t\t\t\t'}</Text>
-          {this.props.A.replace(/"/g, '')}
-          {'\n'}
-          <Text style={styles.textstyle}>File:{'\t\t\t\t\t\t\t\t'}</Text>
-          {this.props.F.replace(/"/g, '')}
-          {'\n'}
-          <Text style={styles.textstyle}>Language:{'\t\t'}</Text>
-          {this.props.L.replace(/"/g, '')}
-        </Text>
-        <View style={styles.countstyle}>
-          <Text style={styles.textstyle}>{this.props.no}</Text>
-        </View>
+import KeyValueText from '../Components/KeyValueText';
+
+const FictionDisplay = ({T, S, A, F, Li, La, nav}) => {
+  return T.map((item, key) => (
+    <TouchableRipple
+      style={styles.container}
+      onPress={() =>
+        nav.navigate('Fiction1Screen', {
+          link: Li[key],
+          title: S[key].replace(/"/g, ''),
+          author: A[key].replace(/"/g, '')
+        })
+      }
+      rippleColor="#B40404">
+      <View style={styles.innerContainer}>
+        <KeyValueText Key={'Title                '} Value={item.replace(/"/g, '')} />
+        <KeyValueText Key={'Series            '} Value={S[key].replace(/"/g, '')} />
+        <KeyValueText Key={'Author           '} Value={A[key].replace(/"/g, '')} />
+        <KeyValueText Key={'File                 '} Value={F[key].replace(/"/g, '')} />
+        <KeyValueText Key={'Language     '} Value={La[key].replace(/"/g, '')} />
       </View>
-    );
-  }
-}
+    </TouchableRipple>
+  ));
+};
 
 const styles = StyleSheet.create({
-  textstyle: {
-    fontWeight: 'bold',
-  },
-  countstyle: {
-    alignItems: 'flex-end',
-    marginRight: 10,
-  },
+  innerContainer: {paddingBottom: 5, paddingLeft: 5},
+  container: {borderBottomWidth: 1, borderBottomColor: '#B40404'}
 });
 
 export default FictionDisplay;

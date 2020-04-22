@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import {
   Text,
   Divider,
@@ -39,7 +39,7 @@ class Fiction1 extends Component {
     var downurl = downlinks[i].replace(/"/g, '').replace('\\', '');
     extension = extension.toLowerCase();
 
-    if (i == 0) {
+    if (i === 0) {
       downurl =
         'http://download.library1.org/fiction/' +
         this.state.id.substring(0, this.state.id.length - 3) +
@@ -128,7 +128,7 @@ class Fiction1 extends Component {
       var detailsarr = details.split('\\t');
 
       for (let i = 0; i < detailsarr.length; i++) {
-        if (detailsarr[i] == '' || detailsarr[i] == '\\n') {
+        if (detailsarr[i] === '' || detailsarr[i] === '\\n') {
           detailsarr.splice(i, 1);
           i = 0;
         }
@@ -175,18 +175,8 @@ class Fiction1 extends Component {
           <Spinner />
         ) : (
           <ScrollView>
-            <View
-              style={{
-                width: 243,
-                height: 363,
-                alignSelf: 'center',
-                justifyContent: 'center',
-                alignItem: 'center',
-                marginTop: 10,
-                borderWidth: 1,
-                borderColor: '#B40404'
-              }}>
-              {imglink == '/img/blank.png' ? (
+            <View style={styles.container}>
+              {imglink === '/img/blank.png' ? (
                 <Image
                   style={{width: 240, height: 360}}
                   resizeMode="cover"
@@ -210,7 +200,7 @@ class Fiction1 extends Component {
             </View>
             <Text style={{alignSelf: 'center', fontSize: 12}}>File Cover</Text>
 
-            <View style={{marginLeft: 5, marginTop: 10, marginRight: 10}}>
+            <View>
               {detailsarr.map((items, key) =>
                 key % 2 ? (
                   <View>
@@ -222,21 +212,12 @@ class Fiction1 extends Component {
                 )
               )}
               <TouchableRipple onPress={() => this.setState({visible: true})} rippleColor="#B40404">
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    marginRight: -5,
-                    alignSelf: 'center',
-                    textDecorationLine: 'underline',
-                    fontSize: 16
-                  }}>
-                  {'\n'}Download{'\n'}
-                </Text>
+                <Text style={styles.downloadText}>Download</Text>
               </TouchableRipple>
               <Divider />
 
               <Text style={{fontWeight: 'bold'}}>Summary:</Text>
-              {desc.length == 0 ? (
+              {desc.length === 0 ? (
                 <Text style={{alignSelf: 'flex-end'}}>Not Available</Text>
               ) : (
                 <Text>
@@ -280,7 +261,7 @@ class Fiction1 extends Component {
                 <Snackbar
                   visible={this.state.visible1}
                   onDismiss={() => this.setState({visible1: false})}
-                  style={{backgroundColor: '#8A0808'}}>
+                  style={styles.failedSnackbar}>
                   Download Failed
                 </Snackbar>
               </Portal>
@@ -291,5 +272,26 @@ class Fiction1 extends Component {
     );
   }
 }
+
+export const styles = StyleSheet.create({
+  container: {
+    width: 243,
+    height: 363,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#B40404'
+  },
+  downloadText: {
+    fontWeight: 'bold',
+    marginRight: -5,
+    alignSelf: 'center',
+    textDecorationLine: 'underline',
+    fontSize: 16,
+    paddingVertical: 20
+  },
+  failedSnackbar: {backgroundColor: '#8A0808'}
+});
 
 export default Fiction1;
