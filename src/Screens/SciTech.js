@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import axios from 'axios';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import {Alert, Text, Appbar, Provider as PaperProvider, IconButton} from 'react-native-paper';
 
 var HTMLParser = require('fast-html-parser');
@@ -12,21 +12,16 @@ import Spinner from '../Components/Spinner';
 
 export class SciTech extends Component {
   state = {
-    searchQuery: 'hello',
+    searchQuery: this.props.navigation.getParam('search', ''),
     currPage: 1,
-    searchIn: 'All',
+    searchIn: this.props.navigation.getParam('sIn', 'All'),
     loading: true,
     root: ''
   };
 
   componentDidMount() {
-    const {navigation} = this.props;
-    const search = navigation.getParam('search', '');
-    const searchin = navigation.getParam('sIn', 'All');
-    this.setState({searchQuery: search, searchIn: searchin});
-
     axios
-      .get('http://gen.lib.rus.ec/search.php?&req=' + search.replace(' ', '+'))
+      .get('http://gen.lib.rus.ec/search.php?&req=' + this.state.searchQuery.replace(' ', '+'))
       .then(data =>
         this.setState({
           root: HTMLParser.parse(data.data),
@@ -122,40 +117,19 @@ export class SciTech extends Component {
           <Spinner />
         ) : (
           <View>
-            <View
-              style={{
-                marginTop: 5,
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                borderBottomWidth: 2,
-                borderBottomColor: '#B40404'
-              }}>
-              <Text style={{fontWeight: 'bold', marginBottom: 5}}>{pages[0]} Files Found</Text>
-              <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+            <View style={styles.topContainer}>
+              <Text style={styles.topContainerText}>{pages[0]} Files Found</Text>
+              <Text style={styles.topContainerText}>
                 Pages {this.state.currPage}/{lastPage}
               </Text>
             </View>
-            <ScrollView style={{marginBottom: 90}}>
+            <ScrollView style={styles.scrollContainer}>
               <SciTechList details={details} />
 
               {lastPage === 1 ? ( //Case of 1 page results and multi page results
-                <Text
-                  style={{
-                    color: '#B40404',
-                    fontWeight: 'bold',
-                    alignSelf: 'center',
-                    marginLeft: -5
-                  }}>
-                  End of Results!!
-                </Text>
+                <Text style={styles.endText}>End of Results!!</Text>
               ) : (
-                <View
-                  style={{
-                    marginLeft: -10,
-                    marginVertical: -2,
-                    flexDirection: 'row',
-                    justifyContent: 'space-around'
-                  }}>
+                <View style={styles.pageContainer}>
                   {this.state.currPage === 1 ? (
                     <IconButton icon="chevron-left" color={'gray'} size={40} />
                   ) : (
@@ -168,7 +142,7 @@ export class SciTech extends Component {
                       }}
                     />
                   )}
-                  <Text style={{fontWeight: 'bold', padding: 30}}>{this.state.currPage}</Text>
+                  <Text style={styles.pageText}>{this.state.currPage}</Text>
                   {this.state.currPage !== lastPage ? (
                     <IconButton
                       icon="chevron-right"
@@ -190,5 +164,30 @@ export class SciTech extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  topContainer: {
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderBottomWidth: 2,
+    borderBottomColor: '#B40404'
+  },
+  endText: {
+    color: '#B40404',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginLeft: -5
+  },
+  pageContainer: {
+    marginLeft: -10,
+    marginVertical: -2,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  scrollContainer: {marginBottom: 90},
+  pageText: {fontWeight: 'bold', padding: 30},
+  topContainerText: {fontWeight: 'bold', marginBottom: 5}
+});
 
 export default SciTech;
