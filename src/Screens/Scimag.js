@@ -5,7 +5,6 @@ import {
   Text,
   ActivityIndicator,
   TouchableRipple,
-  Appbar,
   Provider as PaperProvider,
   Portal,
   Dialog,

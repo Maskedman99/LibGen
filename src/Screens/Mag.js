@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {Alert, Text, Appbar, Provider as PaperProvider} from 'react-native-paper';
+import {Alert, Text, Provider as PaperProvider} from 'react-native-paper';
 
 import MagList from '../Components/MagList';
 import Spinner from '../Components/Spinner';
+import NavBar from '../Components/NavBar';
 
 var HTMLParser = require('fast-html-parser');
 
@@ -44,11 +45,7 @@ class Mag extends Component {
   render() {
     return (
       <PaperProvider>
-        <Appbar.Header style={{backgroundColor: '#B40404'}}>
-          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
-          <Appbar.Content title="Magazines" subtitle={this.state.searchQuery} />
-        </Appbar.Header>
-
+        <NavBar nav={this.props.navigation} title={'Magazine'} subtitle={this.state.searchQuery} />
         {this.state.loading ? (
           <Spinner />
         ) : (
