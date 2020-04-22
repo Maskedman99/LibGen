@@ -2,24 +2,21 @@ import React from 'react';
 import {Text, TouchableRipple} from 'react-native-paper';
 import {View, StyleSheet} from 'react-native';
 
-const MagList = ({data, links}) => {
+const MagList = ({data, links, nav}) => {
   return data.map((item, key) => (
     <View style={styles.container}>
       <TouchableRipple
         rippleColor="#B40404"
         onPress={() =>
-          this.props.navigation.navigate('Mag1Screen', {
+          nav.navigate('Mag1Screen', {
             link: links[key],
-            title: item.replace(/"/g, '')
+            title: item
           })
         }>
         <View>
-          <Text>
-            <Text style={styles.textHead}>
-              {item.replace(/"/g, '')}
-              {'\n'}
-            </Text>
-          </Text>
+          <View style={styles.title}>
+            <Text style={styles.textHead}>{item}</Text>
+          </View>
           <View style={styles.index}>
             <Text style={styles.textHead}>{key + 1}</Text>
           </View>
@@ -31,7 +28,8 @@ const MagList = ({data, links}) => {
 
 const styles = StyleSheet.create({
   container: {borderBottomWidth: 1, borderBottomColor: '#B40404'},
-  textHead: {fontWeight: 'bold', fontSize: 14},
+  title: {marginBottom: 10, paddingLeft: 5},
+  textHead: {fontWeight: 'bold', fontSize: 14, marginLeft: 5},
   index: {alignItems: 'flex-end', marginRight: 10}
 });
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {Text, Provider as PaperProvider} from 'react-native-paper';
 
@@ -6,30 +6,21 @@ import MagList from '../Components/MagList';
 import Spinner from '../Components/Spinner';
 import NavBar from '../Components/NavBar';
 import useAxios from '../Components/Logic/useAxios';
-
-var HTMLParser = require('fast-html-parser');
+import magazineParser from '../Components/Logic/magazineParser';
 
 const Mag = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [titles, setTitles] = useState([]);
   const [links, setLinks] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(navigation.getParam('search', ''));
+  const searchQuery = navigation.getParam('search', '');
 
   let data = [];
   data = useAxios(`http://magzdb.org/makelist?t=${searchQuery.replace(' ', '+')}`);
 
   if (data.length !== 0 && loading === true) {
-    let rows = HTMLParser.parse(data).querySelectorAll('a');
-
-    let titlesVar = [];
-    let linksVar = [];
-    for (let i = 0; i < rows.length; i++) {
-      linksVar[i] = JSON.stringify(rows[i].rawAttrs);
-      linksVar[i] = linksVar[i].replace('"href=', '').replace('"', '');
-      titlesVar[i] = JSON.stringify(rows[i].rawText);
-    }
-    setLinks(linksVar);
-    setTitles(titlesVar);
+    let result = magazineParser(data);
+    setTitles(result.titles);
+    setLinks(result.links);
     setLoading(false);
   }
 
@@ -44,7 +35,7 @@ const Mag = ({navigation}) => {
             <Text style={styles.textStyle}>{`Files Found: ${links.length}`}</Text>
           </View>
           <ScrollView style={styles.bottomContainer}>
-            <MagList data={titles} links={links} />
+            <MagList data={titles} links={links} nav={navigation} />
           </ScrollView>
         </View>
       )}
@@ -61,7 +52,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: '#B40404'
   },
-  bottomContainer: {marginBottom: 90, marginLeft: 5},
+  bottomContainer: {marginBottom: 90},
   textStyle: {fontWeight: 'bold', marginBottom: 5}
 });
 
