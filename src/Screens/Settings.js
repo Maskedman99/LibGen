@@ -1,15 +1,14 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, TouchableRipple, Appbar, Provider as PaperProvider} from 'react-native-paper';
+import {Text, TouchableRipple, Provider as PaperProvider} from 'react-native-paper';
+
+import NavBar from '../Components/NavBar';
 
 const Settings = ({navigation}) => {
   return (
     <PaperProvider>
       <View style={styles.container}>
-        <Appbar.Header style={styles.header}>
-          <Appbar.BackAction onPress={() => navigation.goBack()} />
-          <Appbar.Content title="Settings" />
-        </Appbar.Header>
+        <NavBar nav={navigation} title={'Settings'} />
 
         <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
           <Text style={styles.text}>Download Location</Text>
@@ -35,11 +34,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#B40404'
   },
   text: {
-    marginLeft: 5,
+    paddingLeft: 5,
     marginTop: 30,
     fontSize: 18,
     borderBottomWidth: 1,
-    borderBottomColor: '#ff0000'
+    borderBottomColor: '#B40404'
   }
 });
 
