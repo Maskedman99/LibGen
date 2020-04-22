@@ -1,75 +1,61 @@
-import React, {Component} from 'react';
-import axios from 'axios';
+import React, {useState, useEffect} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {Alert, Text, Provider as PaperProvider} from 'react-native-paper';
+import {Text, Provider as PaperProvider} from 'react-native-paper';
 
 import MagList from '../Components/MagList';
 import Spinner from '../Components/Spinner';
 import NavBar from '../Components/NavBar';
+import useAxios from '../Components/Logic/useAxios';
 
 var HTMLParser = require('fast-html-parser');
 
-class Mag extends Component {
-  constructor(props) {
-    super(props);
-    const {navigation} = this.props;
-    const search = navigation.getParam('search', '');
-    this.state = {
-      searchQuery: search,
-      loading: true,
-      titles: [],
-      links: []
-    };
-  }
-  componentDidMount() {
-    // eslint-disable-next-line consistent-this
-    const self = this;
-    axios
-      .get('http://magzdb.org/makelist?t=' + this.state.searchQuery.replace(' ', '+'))
-      .then(function (data) {
-        var rows = HTMLParser.parse(data.data).querySelectorAll('a');
+const Mag = ({navigation}) => {
+  const [loading, setLoading] = useState(true);
+  const [titles, setTitles] = useState([]);
+  const [links, setLinks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(navigation.getParam('search', ''));
 
-        var titles = [];
-        var links = [];
-        for (var i = 0; i < rows.length; i++) {
-          links[i] = JSON.stringify(rows[i].rawAttrs);
-          links[i] = links[i].replace('"href=', '').replace('"', '');
-          titles[i] = JSON.stringify(rows[i].rawText);
-        }
+  let data = [];
+  data = useAxios(`http://magzdb.org/makelist?t=${searchQuery.replace(' ', '+')}`);
 
-        self.setState({loading: false, titles: titles, links: links});
-      })
-      .catch(err => Alert.alert(err));
+  if (data.length !== 0 && loading === true) {
+    let rows = HTMLParser.parse(data).querySelectorAll('a');
+
+    let titlesVar = [];
+    let linksVar = [];
+    for (let i = 0; i < rows.length; i++) {
+      linksVar[i] = JSON.stringify(rows[i].rawAttrs);
+      linksVar[i] = linksVar[i].replace('"href=', '').replace('"', '');
+      titlesVar[i] = JSON.stringify(rows[i].rawText);
+    }
+    setLinks(linksVar);
+    setTitles(titlesVar);
+    setLoading(false);
   }
 
-  render() {
-    return (
-      <PaperProvider>
-        <NavBar nav={this.props.navigation} title={'Magazine'} subtitle={this.state.searchQuery} />
-        {this.state.loading ? (
-          <Spinner />
-        ) : (
-          <View>
-            <View style={styles.topContainer}>
-              <Text style={styles.textStyle}>Files Found: </Text>
-              <Text style={styles.textStyle}>
-                {this.state.links.length}
-                {'\t'}
-              </Text>
-            </View>
-            <ScrollView style={styles.bottomContainer}>
-              <MagList data={this.state.titles} links={this.state.links} />
-            </ScrollView>
+  return (
+    <PaperProvider>
+      <NavBar nav={navigation} title={'Magazine'} subtitle={searchQuery} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <View>
+          <View style={styles.topContainer}>
+            <Text style={styles.textStyle}>{`Files Found: ${links.length}`}</Text>
           </View>
-        )}
-      </PaperProvider>
-    );
-  }
-}
+          <ScrollView style={styles.bottomContainer}>
+            <MagList data={titles} links={links} />
+          </ScrollView>
+        </View>
+      )}
+    </PaperProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   topContainer: {
     marginTop: 5,
+    paddingRight: 10,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     borderBottomWidth: 2,
