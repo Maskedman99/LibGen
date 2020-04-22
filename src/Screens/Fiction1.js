@@ -7,17 +7,18 @@ import {
   Dialog,
   Portal,
   Button,
-  ActivityIndicator,
-  Appbar,
   Provider as PaperProvider,
   TouchableRipple,
-  Snackbar,
+  Snackbar
 } from 'react-native-paper';
 import Image from 'react-native-image-progress';
 import Progress from 'react-native-progress/Bar';
 import RNFetchBlob from 'rn-fetch-blob';
 
 var HTMLParser = require('fast-html-parser');
+
+import NavBar from '../Components/NavBar';
+import Spinner from '../Components/Spinner';
 
 class Fiction1 extends Component {
   state = {
@@ -30,7 +31,7 @@ class Fiction1 extends Component {
     loading: true,
     loading1: true,
     visible: false,
-    visible1: false,
+    visible1: false
   };
   _hideDialog = () => this.setState({visible: false});
 
@@ -61,8 +62,8 @@ class Fiction1 extends Component {
         notification: true,
         title: this.state.Title, // Title of download notification.
         path: DownloadDir + '/' + this.state.Title + '.' + extension, // this is the path where your downloaded file will live in
-        description: 'Downloading file.',
-      },
+        description: 'Downloading file.'
+      }
     };
     config(options)
       .fetch('GET', downurl)
@@ -87,8 +88,8 @@ class Fiction1 extends Component {
       .then(data =>
         this.setState({
           root: HTMLParser.parse(data.data),
-          loading: false,
-        }),
+          loading: false
+        })
       )
       .catch(err => alert('Something went wrong! Check your connection.'));
   }
@@ -121,7 +122,7 @@ class Fiction1 extends Component {
               .replace('\n\t\t', '')
               .replace('\n\t', '')
               .replace('\n', '')
-              .replace(/&nbsp;/g, ' '),
+              .replace(/&nbsp;/g, ' ')
           );
       }
       var detailsarr = details.split('\\t');
@@ -143,7 +144,7 @@ class Fiction1 extends Component {
       if (this.state.flag === 0) {
         this.setState({
           md5: detailsarr1[1],
-          id: detailsarr[detailsarr.length - 3],
+          id: detailsarr[detailsarr.length - 3]
         });
       }
 
@@ -160,9 +161,7 @@ class Fiction1 extends Component {
 
       var dlinks1 = [];
       for (let i = 0; i < dlinks0.length; i++) {
-        dlinks1[i] = JSON.stringify(
-          dlinks0[i].childNodes[0].rawAttrs.replace('href="', ''),
-        );
+        dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href="', ''));
       }
 
       //Debugging----------------------------------------------------------------------------------------
@@ -171,20 +170,9 @@ class Fiction1 extends Component {
 
     return (
       <PaperProvider>
-        <Appbar.Header style={{backgroundColor: '#B40404'}}>
-          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
-          <Appbar.Content
-            title={this.state.Title}
-            subtitle={this.state.Author}
-          />
-        </Appbar.Header>
+        <NavBar nav={this.props.navigation} title={this.state.Title} subtitle={this.state.Author} />
         {this.state.loading ? (
-          <ActivityIndicator
-            animating={true}
-            color="#B40404"
-            size={40}
-            style={{flex: 1}}
-          />
+          <Spinner />
         ) : (
           <ScrollView>
             <View
@@ -196,7 +184,7 @@ class Fiction1 extends Component {
                 alignItem: 'center',
                 marginTop: 10,
                 borderWidth: 1,
-                borderColor: '#B40404',
+                borderColor: '#B40404'
               }}>
               {imglink == '/img/blank.png' ? (
                 <Image
@@ -213,7 +201,7 @@ class Fiction1 extends Component {
                     size: 40,
                     borderWidth: 0,
                     color: 'rgba(180, 4, 4, 1)',
-                    unfilledColor: 'rgba(0, 0, 0, 0.2)',
+                    unfilledColor: 'rgba(0, 0, 0, 0.2)'
                   }}
                   resizeMode="cover"
                   source={{uri: imglink}}
@@ -226,27 +214,21 @@ class Fiction1 extends Component {
               {detailsarr.map((items, key) =>
                 key % 2 ? (
                   <View>
-                    <Text style={{alignSelf: 'flex-end'}}>
-                      {items.replace('\\n', '')}
-                    </Text>
+                    <Text style={{alignSelf: 'flex-end'}}>{items.replace('\\n', '')}</Text>
                     <Divider />
                   </View>
                 ) : (
-                  <Text style={{fontWeight: 'bold'}}>
-                    {items.replace(/"/g, '')}
-                  </Text>
-                ),
+                  <Text style={{fontWeight: 'bold'}}>{items.replace(/"/g, '')}</Text>
+                )
               )}
-              <TouchableRipple
-                onPress={() => this.setState({visible: true})}
-                rippleColor="#B40404">
+              <TouchableRipple onPress={() => this.setState({visible: true})} rippleColor="#B40404">
                 <Text
                   style={{
                     fontWeight: 'bold',
                     marginRight: -5,
                     alignSelf: 'center',
                     textDecorationLine: 'underline',
-                    fontSize: 16,
+                    fontSize: 16
                   }}>
                   {'\n'}Download{'\n'}
                 </Text>
@@ -264,39 +246,27 @@ class Fiction1 extends Component {
               )}
 
               <Text style={{alignSelf: 'center', marginRight: -5}}>Hashes</Text>
-              <Divider
-                style={{backgroundColor: '#B40404', scaleY: 4, marginRight: -5}}
-              />
+              <Divider style={{backgroundColor: '#B40404', scaleY: 4, marginRight: -5}} />
               {detailsarr1.map((items, key) =>
                 key % 2 ? (
                   <View>
-                    <Text style={{fontSize: 12}}>
-                      {items.replace('\\n', '')}
-                    </Text>
+                    <Text style={{fontSize: 12}}>{items.replace('\\n', '')}</Text>
                     <Divider />
                   </View>
                 ) : (
-                  <Text style={{fontWeight: 'bold'}}>
-                    {items.replace(/"/g, '')}
-                  </Text>
-                ),
+                  <Text style={{fontWeight: 'bold'}}>{items.replace(/"/g, '')}</Text>
+                )
               )}
 
               <Portal>
-                <Dialog
-                  visible={this.state.visible}
-                  onDismiss={this._hideDialog}>
+                <Dialog visible={this.state.visible} onDismiss={this._hideDialog}>
                   <Dialog.Title>Download</Dialog.Title>
                   <Divider />
                   <Dialog.Content>
-                    <Button
-                      onPress={() => this.downloadfunction(dlinks1, ext, 0)}
-                      color="#B40404">
+                    <Button onPress={() => this.downloadfunction(dlinks1, ext, 0)} color="#B40404">
                       Gen.lib.rus.ec
                     </Button>
-                    <Button
-                      onPress={() => this.downloadfunction(dlinks1, ext, 1)}
-                      color="#B40404">
+                    <Button onPress={() => this.downloadfunction(dlinks1, ext, 1)} color="#B40404">
                       Libgen.io
                     </Button>
                     <Button

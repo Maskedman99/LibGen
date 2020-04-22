@@ -115,9 +115,9 @@ export class SciTech extends Component {
         ) : (
           <View>
             <View style={styles.topContainer}>
-              <Text style={styles.topContainerText}>{pages[0]} Files Found</Text>
+              <Text style={styles.topContainerText}>{`${pages[0]} Files Found`}</Text>
               <Text style={styles.topContainerText}>
-                Pages {this.state.currPage}/{lastPage}
+                {`Pages ${this.state.currPage}/${lastPage}`}
               </Text>
             </View>
             <ScrollView style={styles.scrollContainer}>
