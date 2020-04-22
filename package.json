@@ -18,7 +18,7 @@
     "react-native": "0.62.1",
     "react-native-gesture-handler": "1.6.1",
     "react-native-image-progress": "^1.1.1",
-    "react-native-paper": "3.7.0",
+    "react-native-paper": "3.8.0",
     "react-native-progress": "^4.1.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "2.5.0",
