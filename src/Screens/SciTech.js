@@ -3,12 +3,13 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {Alert, Text, Appbar, Provider as PaperProvider, IconButton} from 'react-native-paper';
+import {Alert, Text, Provider as PaperProvider, IconButton} from 'react-native-paper';
 
 var HTMLParser = require('fast-html-parser');
 
 import SciTechList from '../Components/SciTechList';
 import Spinner from '../Components/Spinner';
+import NavBar from '../Components/NavBar';
 
 export class SciTech extends Component {
   state = {
@@ -104,15 +105,11 @@ export class SciTech extends Component {
 
     return (
       <PaperProvider>
-        <Appbar.Header style={{backgroundColor: '#B40404'}}>
-          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
-          <Appbar.Content
-            title="LibGen (Sci-Tech)"
-            subtitle={this.state.searchQuery + '\t\t.\t\t' + this.state.searchIn}
-          />
-          <Appbar.Action icon="dots-vertical" onPress={this._onMore} />
-        </Appbar.Header>
-
+        <NavBar
+          nav={this.props.navigation}
+          title={'LibGen (Sci-Tech)'}
+          subtitle={`${this.state.searchIn}\t\t.\t\t${this.state.searchQuery}`}
+        />
         {this.state.loading ? (
           <Spinner />
         ) : (
