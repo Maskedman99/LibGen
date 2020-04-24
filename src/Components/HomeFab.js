@@ -57,7 +57,7 @@ const HomeFab = ({nav}) => {
   );
 };
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   fab: {paddingBottom: 10, paddingRight: 10},
   fabstyle: {backgroundColor: '#B40404'}
 });

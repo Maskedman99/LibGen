@@ -11,14 +11,13 @@ import {
   TouchableRipple,
   Snackbar
 } from 'react-native-paper';
-import Image from 'react-native-image-progress';
-import Progress from 'react-native-progress/Bar';
 import RNFetchBlob from 'rn-fetch-blob';
 
 var HTMLParser = require('fast-html-parser');
 
 import NavBar from '../Components/NavBar';
 import Spinner from '../Components/Spinner';
+import LoadingImage from '../Components/LoadingImage';
 
 class Fiction1 extends Component {
   state = {
@@ -174,30 +173,8 @@ class Fiction1 extends Component {
         {this.state.loading ? (
           <Spinner />
         ) : (
-          <ScrollView>
-            <View style={styles.container}>
-              {imglink === '/img/blank.png' ? (
-                <Image
-                  style={{width: 240, height: 360}}
-                  resizeMode="cover"
-                  imageStyle={{width: 239, height: 360}}
-                  source={require('../Assets/blank.png')}
-                />
-              ) : (
-                <Image
-                  style={{width: 240, height: 360}}
-                  indicator={Progress.Pie}
-                  indicatorProps={{
-                    size: 40,
-                    borderWidth: 0,
-                    color: 'rgba(180, 4, 4, 1)',
-                    unfilledColor: 'rgba(0, 0, 0, 0.2)'
-                  }}
-                  resizeMode="cover"
-                  source={{uri: imglink}}
-                />
-              )}
-            </View>
+          <ScrollView style={styles.container}>
+            <LoadingImage imageUrl={imglink} />
             <Text style={{alignSelf: 'center', fontSize: 12}}>File Cover</Text>
 
             <View>
@@ -226,7 +203,7 @@ class Fiction1 extends Component {
                 </Text>
               )}
 
-              <Text style={{alignSelf: 'center', marginRight: -5}}>Hashes</Text>
+              <Text style={{textAlign: 'center'}}>Hashes</Text>
               <Divider style={{backgroundColor: '#B40404', scaleY: 4, marginRight: -5}} />
               {detailsarr1.map((items, key) =>
                 key % 2 ? (
@@ -275,11 +252,14 @@ class Fiction1 extends Component {
 
 export const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 5,
+    paddingVertical: 10
+  },
+  imgContainer: {
     width: 243,
     height: 363,
     alignSelf: 'center',
     justifyContent: 'center',
-    marginTop: 10,
     borderWidth: 1,
     borderColor: '#B40404'
   },

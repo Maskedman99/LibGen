@@ -173,7 +173,6 @@ const styles = StyleSheet.create({
   },
   radio1: {
     flexDirection: 'row',
-    paddingTop: 5,
     marginHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#B40404'

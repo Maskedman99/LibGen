@@ -188,7 +188,7 @@ export class Fiction extends Component {
   }
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   topContainer: {
     marginTop: 5,
     flexDirection: 'row',

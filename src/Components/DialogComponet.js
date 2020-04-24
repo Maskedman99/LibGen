@@ -1,11 +1,11 @@
 import React from 'react';
 import {Provider as PaperProvider, Text, Portal, Dialog} from 'react-native-paper';
 
-const DialogComponent = ({title, content}) => {
+const DialogComponent = ({nav, title, content}) => {
   return (
     <PaperProvider>
       <Portal>
-        <Dialog visible={true} onDismiss={() => this.props.nav.goBack()}>
+        <Dialog visible={true} onDismiss={() => nav.goBack()}>
           <Dialog.Title>{title}</Dialog.Title>
           <Dialog.Content>
             <Text>{content}</Text>
