@@ -2,14 +2,15 @@ import React, {useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {
   Text,
-  Appbar,
   TouchableRipple,
   Provider as PaperProvider,
   Portal,
   Modal,
   Dialog
 } from 'react-native-paper';
+
 import txt from '../Assets/aboutInfos.json';
+import NavBar from '../Components/Common/NavBar';
 
 const Credits = ({navigation}) => {
   const [visibleTC, setVisibleTC] = useState(false);
@@ -25,10 +26,7 @@ const Credits = ({navigation}) => {
 
   return (
     <PaperProvider>
-      <Appbar.Header style={styles.header}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="About" />
-      </Appbar.Header>
+      <NavBar nav={navigation} title={'Abouut'} />
 
       <TouchableRipple onPress={_showCredits} rippleColor="#B40404">
         <Text style={styles.text}>Credits</Text>

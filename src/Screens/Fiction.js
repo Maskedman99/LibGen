@@ -3,10 +3,10 @@ import axios from 'axios';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {Text, Provider as PaperProvider, IconButton} from 'react-native-paper';
 
-import DialogComponent from '../Components/DialogComponet';
+import DialogComponent from '../Components/Common/DialogComponet';
 import FictionDisplay from '../Components/FictionDisplay';
-import NavBar from '../Components/NavBar';
-import Spinner from '../Components/Spinner';
+import NavBar from '../Components/Common/NavBar';
+import Spinner from '../Components/Common/Spinner';
 
 var HTMLParser = require('fast-html-parser');
 

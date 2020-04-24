@@ -11,7 +11,7 @@ const LoadingImage = ({imageUrl}) => {
           style={{width: 240, height: 360}}
           resizeMode="cover"
           imageStyle={{width: 239, height: 360}}
-          source={require('../Assets/blank.png')}
+          source={require('../../Assets/blank.png')}
         />
       ) : (
         <Image

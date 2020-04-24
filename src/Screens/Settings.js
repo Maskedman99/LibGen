@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, TouchableRipple, Provider as PaperProvider} from 'react-native-paper';
 
-import NavBar from '../Components/NavBar';
+import NavBar from '../Components/Common/NavBar';
 
 const Settings = ({navigation}) => {
   return (

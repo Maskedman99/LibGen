@@ -2,7 +2,7 @@ import React from 'react';
 import {TouchableRipple} from 'react-native-paper';
 import {View, StyleSheet} from 'react-native';
 
-import KeyValueText from './KeyValueText';
+import KeyValueText from './Common/KeyValueText';
 
 const SciTechList = ({details}) => {
   return details.map((item, key) => (

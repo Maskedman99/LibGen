@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
 
-import KeyValueText from '../Components/KeyValueText';
+import KeyValueText from './Common/KeyValueText';
 
 const FictionDisplay = ({T, S, A, F, Li, La, nav}) => {
   return T.map((item, key) => (

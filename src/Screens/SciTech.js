@@ -8,8 +8,8 @@ import {Alert, Text, Provider as PaperProvider, IconButton} from 'react-native-p
 var HTMLParser = require('fast-html-parser');
 
 import SciTechList from '../Components/SciTechList';
-import Spinner from '../Components/Spinner';
-import NavBar from '../Components/NavBar';
+import Spinner from '../Components/Common/Spinner';
+import NavBar from '../Components/Common/NavBar';
 
 export class SciTech extends Component {
   state = {

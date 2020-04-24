@@ -12,8 +12,8 @@ import {
 } from 'react-native-paper';
 
 var HTMLParser = require('fast-html-parser');
-import Spinner from '../Components/Spinner';
-import NavBar from '../Components/NavBar';
+import Spinner from '../Components/Common/Spinner';
+import NavBar from '../Components/Common/NavBar';
 
 export class Scimag extends Component {
   state = {

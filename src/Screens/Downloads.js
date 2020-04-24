@@ -2,12 +2,12 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 
-import NavBar from '../Components/NavBar';
+import NavBar from '../Components/Common/NavBar';
 
-export const Downloads = props => {
+export const Downloads = ({navigation}) => {
   return (
     <PaperProvider>
-      <NavBar nav={props.navigation} title={'Downloads'} />
+      <NavBar nav={navigation} title={'Downloads'} />
       <ScrollView />
     </PaperProvider>
   );

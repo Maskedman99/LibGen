@@ -15,9 +15,9 @@ import RNFetchBlob from 'rn-fetch-blob';
 
 var HTMLParser = require('fast-html-parser');
 
-import NavBar from '../Components/NavBar';
-import Spinner from '../Components/Spinner';
-import LoadingImage from '../Components/LoadingImage';
+import NavBar from '../Components/Common/NavBar';
+import Spinner from '../Components/Common/Spinner';
+import LoadingImage from '../Components/Common/LoadingImage';
 
 class Fiction1 extends Component {
   state = {
