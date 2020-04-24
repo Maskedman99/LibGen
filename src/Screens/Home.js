@@ -7,18 +7,17 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   PermissionsAndroid,
-  Platform,
-  Share
+  Platform
 } from 'react-native';
 import {
-  FAB,
-  Portal,
   Text,
   RadioButton,
   Searchbar,
   Provider as PaperProvider,
   HelperText
 } from 'react-native-paper';
+
+import HomeFab from '../Components/HomeFab';
 
 export class Home extends Component {
   constructor(props) {
@@ -210,56 +209,7 @@ export class Home extends Component {
             </View>
           </RadioButton.Group>
         </ScrollView>
-
-        <Portal>
-          <FAB.Group
-            open={this.state.open}
-            icon={this.state.open ? 'unfold-less-horizontal' : 'unfold-more-horizontal'}
-            fabStyle={styles.fabstyle}
-            style={styles.fab}
-            actions={[
-              {
-                icon: 'share-variant',
-                label: 'Share',
-                color: '#B40404',
-                onPress: () => {
-                  Share.share(
-                    {
-                      message: 'http://gen.lib.rus.ec/  ',
-                      url: 'http://gen.lib.rus.ec/', //Only IOS
-                      title: 'Hey there, checkout this link!'
-                    },
-                    {
-                      // Android only:
-                      dialogTitle: 'Share LibGen, spread the knowledge!',
-                      // iOS only:
-                      excludedActivityTypes: ['com.apple.UIKit.activity.PostToTwitter']
-                    }
-                  );
-                }
-              },
-              {
-                icon: 'information-variant',
-                label: 'About',
-                color: '#B40404',
-                onPress: () => this.props.navigation.navigate('AboutScreen')
-              },
-              {
-                icon: 'settings',
-                label: 'Settings',
-                color: '#B40404',
-                onPress: () => this.props.navigation.navigate('SettingScreen')
-              },
-              {
-                icon: 'file-download',
-                label: 'Downloads',
-                color: '#B40404',
-                onPress: () => this.props.navigation.navigate('DownloadsScreen')
-              }
-            ]}
-            onStateChange={({open}) => this.setState({open})}
-          />
-        </Portal>
+        <HomeFab nav={this.props.navigation} />
       </PaperProvider>
     );
   }
@@ -302,18 +252,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1
   },
-  fab: {
-    paddingBottom: 10,
-    paddingRight: 10
-  },
   searchbar: {
     marginLeft: 5,
     marginRight: 5,
     borderColor: '#B40404',
     height: 55,
     borderWidth: 1
-  },
-  fabstyle: {backgroundColor: '#B40404'}
+  }
 });
 
 export default Home;
