@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {View, ScrollView} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 
-import Spinner from '../Components/Spinner';
-import NavBar from '../Components/NavBar';
+import Spinner from '../Components/Common/Spinner';
+import NavBar from '../Components/Common/NavBar';
 
 export const Mag1 = ({navigation}) => {
   const [loading] = useState(true);

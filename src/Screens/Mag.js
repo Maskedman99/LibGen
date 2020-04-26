@@ -3,8 +3,8 @@ import {View, ScrollView, StyleSheet} from 'react-native';
 import {Text, Provider as PaperProvider} from 'react-native-paper';
 
 import MagList from '../Components/MagList';
-import Spinner from '../Components/Spinner';
-import NavBar from '../Components/NavBar';
+import Spinner from '../Components/Common/Spinner';
+import NavBar from '../Components/Common/NavBar';
 import useAxios from '../Components/Logic/useAxios';
 import magazineParser from '../Components/Logic/magazineParser';
 

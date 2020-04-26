@@ -101,15 +101,13 @@ class Fiction1 extends Component {
       var dlinks = this.state.root.querySelectorAll('.record_mirrors');
 
       // Image link Parsing------------------------------------------------------------------------------
-      var imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs);
-      var imgarr = imglink.split('\\');
-      imglink = imgarr[1].replace('"', '');
+      var imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs)
+        .split('\\')[1]
+        .replace('"', '');
 
       //Summary Parsing----------------------------------------------------------------------------------
-      if (desc.length !== 0) {
-        var summary = JSON.stringify(desc[0].rawText);
-        var summary = summary.replace('"SUMMARY:', '');
-      }
+      var summary =
+        desc.length !== 0 ? JSON.stringify(desc[0].rawText).replace('"SUMMARY:', '') : '';
 
       //Details Parsing----------------------------------------------------------------------------------
       var details = '';
@@ -162,9 +160,6 @@ class Fiction1 extends Component {
       for (let i = 0; i < dlinks0.length; i++) {
         dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href="', ''));
       }
-
-      //Debugging----------------------------------------------------------------------------------------
-      //console.log(imglink);
     }
 
     return (
@@ -175,17 +170,16 @@ class Fiction1 extends Component {
         ) : (
           <ScrollView style={styles.container}>
             <LoadingImage imageUrl={imglink} />
-            <Text style={{alignSelf: 'center', fontSize: 12}}>File Cover</Text>
 
             <View>
               {detailsarr.map((items, key) =>
                 key % 2 ? (
                   <View>
-                    <Text style={{alignSelf: 'flex-end'}}>{items.replace('\\n', '')}</Text>
+                    <Text style={styles.textValue}>{items.replace('\\n', '')}</Text>
                     <Divider />
                   </View>
                 ) : (
-                  <Text style={{fontWeight: 'bold'}}>{items.replace(/"/g, '')}</Text>
+                  <Text style={styles.textKey}>{items.replace(/"/g, '')}</Text>
                 )
               )}
               <TouchableRipple onPress={() => this.setState({visible: true})} rippleColor="#B40404">
@@ -193,17 +187,14 @@ class Fiction1 extends Component {
               </TouchableRipple>
               <Divider />
 
-              <Text style={{fontWeight: 'bold'}}>Summary:</Text>
+              <Text style={styles.textKey}>Summary:</Text>
               {desc.length === 0 ? (
-                <Text style={{alignSelf: 'flex-end'}}>Not Available</Text>
+                <Text style={styles.textValue}>Not Available</Text>
               ) : (
-                <Text>
-                  {summary}
-                  {'\n'}
-                </Text>
+                <Text style={styles.textValue}>{summary}</Text>
               )}
 
-              <Text style={{textAlign: 'center'}}>Hashes</Text>
+              <Text style={styles.textHash}>Hashes</Text>
               <Divider style={{backgroundColor: '#B40404', scaleY: 4, marginRight: -5}} />
               {detailsarr1.map((items, key) =>
                 key % 2 ? (
@@ -212,7 +203,7 @@ class Fiction1 extends Component {
                     <Divider />
                   </View>
                 ) : (
-                  <Text style={{fontWeight: 'bold'}}>{items.replace(/"/g, '')}</Text>
+                  <Text style={styles.textKey}>{items.replace(/"/g, '')}</Text>
                 )
               )}
 
@@ -225,13 +216,13 @@ class Fiction1 extends Component {
                       Gen.lib.rus.ec
                     </Button>
                     <Button onPress={() => this.downloadfunction(dlinks1, ext, 1)} color="#B40404">
-                      Libgen.io
+                      Libgen.lc
                     </Button>
                     <Button
                       disabled={true}
                       onPress={() => this.downloadfunction(dlinks1, ext, 2)}
                       color="#B40404">
-                      Libgen.pw
+                      Z-Library
                     </Button>
                   </Dialog.Content>
                 </Dialog>
@@ -271,7 +262,10 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 20
   },
-  failedSnackbar: {backgroundColor: '#8A0808'}
+  failedSnackbar: {backgroundColor: '#8A0808'},
+  textKey: {fontWeight: 'bold'},
+  textValue: {alignSelf: 'flex-end'},
+  textHash: {textAlign: 'center', paddingTop: 5, fontWeight: 'bold'}
 });
 
 export default Fiction1;
