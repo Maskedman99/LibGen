@@ -66,12 +66,12 @@ export class Fiction extends Component {
           );
         }
 
-        var titles = [];
-        var links = [];
-        var series = [];
-        var language = [];
-        var file = [];
-        var authors = [];
+        let titles = [];
+        let links = [];
+        let series = [];
+        let language = [];
+        let file = [];
+        let authors = [];
         for (let i = 7, j = 0; i < rows.length; i += 3, j++) {
           authors[j] = JSON.stringify(
             rows[i].rawText
@@ -91,11 +91,11 @@ export class Fiction extends Component {
           i++;
           file[j] = JSON.stringify(rows[i].rawText.replace('&nbsp;', ' '));
         }
-        var filesfound = found
+        let filesfound = found
           ? ''
           : JSON.stringify(pageinfo[0].childNodes[1].rawText.replace('&nbsp;', ''));
 
-        var page = found
+        let page = found
           ? ''
           : pageinfo[0].childNodes[3] === undefined
           ? 'page 1 / 1 ' //Since page no is not shown in only 1 page cases pageinfo[0].childnode[3] doesn't exist and causes error

@@ -21,12 +21,18 @@ import LoadingImage from '../Components/Common/LoadingImage';
 
 class Fiction1 extends Component {
   state = {
-    Title: '',
-    Author: '',
+    Title: this.props.navigation.getParam('title', ''),
+    Author: this.props.navigation.getParam('author', ''),
     flag: 0,
     root: '',
     md5: '',
     id: '',
+    imglink: '',
+    summary: '',
+    ext: '',
+    dlinks1: [],
+    detailsarr: [],
+    detailsarr1: [],
     loading: true,
     loading1: true,
     visible: false,
@@ -75,93 +81,93 @@ class Fiction1 extends Component {
   }
 
   componentDidMount() {
-    const {navigation} = this.props;
-    const link = navigation.getParam('link', '');
-    const title = navigation.getParam('title', '');
-    const author = navigation.getParam('author', '');
-    this.setState({Title: title, Author: author});
-
-    let url = 'http://gen.lib.rus.ec' + link.replace(/"/g, '');
+    let url = `http://gen.lib.rus.ec${this.props.navigation
+      .getParam('link', '')
+      .replace(/"/g, '')}`;
     axios
       .get(url)
-      .then(data =>
+      .then(data => {
+        let root = HTMLParser.parse(data.data);
+        var rows = root.querySelectorAll('tr');
+        var desc = root.querySelectorAll('.description');
+        var imgrows = root.querySelectorAll('.record_side');
+        var dlinks = root.querySelectorAll('.record_mirrors');
+
+        // Image link Parsing------------------------------------------------------------------------------
+        var imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs)
+          .split('\\')[1]
+          .replace('"', '');
+
+        //Summary Parsing----------------------------------------------------------------------------------
+        var summary =
+          desc.length !== 0 ? JSON.stringify(desc[0].rawText).replace('"SUMMARY:', '') : '';
+
+        //Details Parsing----------------------------------------------------------------------------------
+        var details = '';
+        for (let i = 0; i < rows.length; i++) {
+          details =
+            details +
+            JSON.stringify(
+              rows[i].rawText
+                .replace('\n\t\t', '')
+                .replace('\n\t', '')
+                .replace('\n', '')
+                .replace(/&nbsp;/g, ' ')
+            );
+        }
+        var detailsarr = details.split('\\t');
+
+        for (let i = 0; i < detailsarr.length; i++) {
+          if (detailsarr[i] === '' || detailsarr[i] === '\\n') {
+            detailsarr.splice(i, 1);
+            i = 0;
+          }
+        }
+        detailsarr.pop();
+        detailsarr.pop();
+        detailsarr.pop();
+        var detailsarr1 = detailsarr.splice(0, 14);
+        if (this.state.Author === '') {
+          detailsarr.splice(3, 0, '');
+        }
+        var ext = detailsarr[detailsarr.length - 7]; //File Extension
+        if (this.state.flag === 0) {
+          this.setState({
+            md5: detailsarr1[1],
+            id: detailsarr[detailsarr.length - 3]
+          });
+        }
+
+        //Downlnoad Links Parsing--------------------------------------------------------------------------
+        var dlinks0 = [];
+        if (this.state.flag === 0) {
+          // if not present every time the screen renders the values change.
+          dlinks[0].childNodes.pop();
+          dlinks[0].childNodes.pop();
+          dlinks[0].childNodes.shift();
+          this.setState({flag: 1});
+        }
+        dlinks0 = dlinks[0].childNodes;
+
+        var dlinks1 = [];
+        for (let i = 0; i < dlinks0.length; i++) {
+          dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href="', ''));
+        }
+
         this.setState({
-          root: HTMLParser.parse(data.data),
+          imglink: imglink,
+          summary: summary,
+          ext: ext,
+          dlinks1: dlinks1,
+          detailsarr: detailsarr,
+          detailsarr1: detailsarr1,
           loading: false
-        })
-      )
-      .catch(err => alert('Something went wrong! Check your connection.'));
+        });
+      })
+      .catch(err => alert(err));
   }
 
   render() {
-    if (this.state.loading === false) {
-      var rows = this.state.root.querySelectorAll('tr');
-      var desc = this.state.root.querySelectorAll('.description');
-      var imgrows = this.state.root.querySelectorAll('.record_side');
-      var dlinks = this.state.root.querySelectorAll('.record_mirrors');
-
-      // Image link Parsing------------------------------------------------------------------------------
-      var imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs)
-        .split('\\')[1]
-        .replace('"', '');
-
-      //Summary Parsing----------------------------------------------------------------------------------
-      var summary =
-        desc.length !== 0 ? JSON.stringify(desc[0].rawText).replace('"SUMMARY:', '') : '';
-
-      //Details Parsing----------------------------------------------------------------------------------
-      var details = '';
-      for (let i = 0; i < rows.length; i++) {
-        details =
-          details +
-          JSON.stringify(
-            rows[i].rawText
-              .replace('\n\t\t', '')
-              .replace('\n\t', '')
-              .replace('\n', '')
-              .replace(/&nbsp;/g, ' ')
-          );
-      }
-      var detailsarr = details.split('\\t');
-
-      for (let i = 0; i < detailsarr.length; i++) {
-        if (detailsarr[i] === '' || detailsarr[i] === '\\n') {
-          detailsarr.splice(i, 1);
-          i = 0;
-        }
-      }
-      detailsarr.pop();
-      detailsarr.pop();
-      detailsarr.pop();
-      var detailsarr1 = detailsarr.splice(0, 14);
-      if (this.state.Author === '') {
-        detailsarr.splice(3, 0, '');
-      }
-      var ext = detailsarr[detailsarr.length - 7]; //File Extension
-      if (this.state.flag === 0) {
-        this.setState({
-          md5: detailsarr1[1],
-          id: detailsarr[detailsarr.length - 3]
-        });
-      }
-
-      //Downlnoad Links Parsing--------------------------------------------------------------------------
-      var dlinks0 = [];
-      if (this.state.flag === 0) {
-        // if not present every time the screen renders the values change.
-        dlinks[0].childNodes.pop();
-        dlinks[0].childNodes.pop();
-        dlinks[0].childNodes.shift();
-        this.setState({flag: 1});
-      }
-      dlinks0 = dlinks[0].childNodes;
-
-      var dlinks1 = [];
-      for (let i = 0; i < dlinks0.length; i++) {
-        dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href="', ''));
-      }
-    }
-
     return (
       <PaperProvider>
         <NavBar nav={this.props.navigation} title={this.state.Title} subtitle={this.state.Author} />
@@ -169,10 +175,10 @@ class Fiction1 extends Component {
           <Spinner />
         ) : (
           <ScrollView style={styles.container}>
-            <LoadingImage imageUrl={imglink} />
+            <LoadingImage imageUrl={this.state.imglink} />
 
             <View>
-              {detailsarr.map((items, key) =>
+              {this.state.detailsarr.map((items, key) =>
                 key % 2 ? (
                   <View>
                     <Text style={styles.textValue}>{items.replace('\\n', '')}</Text>
@@ -188,15 +194,15 @@ class Fiction1 extends Component {
               <Divider />
 
               <Text style={styles.textKey}>Summary:</Text>
-              {desc.length === 0 ? (
+              {this.state.summary === '' ? (
                 <Text style={styles.textValue}>Not Available</Text>
               ) : (
-                <Text style={styles.textValue}>{summary}</Text>
+                <Text style={styles.textValue}>{this.state.summary}</Text>
               )}
 
               <Text style={styles.textHash}>Hashes</Text>
               <Divider style={{backgroundColor: '#B40404', scaleY: 4, marginRight: -5}} />
-              {detailsarr1.map((items, key) =>
+              {this.state.detailsarr1.map((items, key) =>
                 key % 2 ? (
                   <View>
                     <Text style={{fontSize: 12}}>{items.replace('\\n', '')}</Text>
@@ -212,15 +218,19 @@ class Fiction1 extends Component {
                   <Dialog.Title>Download</Dialog.Title>
                   <Divider />
                   <Dialog.Content>
-                    <Button onPress={() => this.downloadfunction(dlinks1, ext, 0)} color="#B40404">
+                    <Button
+                      onPress={() => this.downloadfunction(this.state.dlinks1, this.state.ext, 0)}
+                      color="#B40404">
                       Gen.lib.rus.ec
                     </Button>
-                    <Button onPress={() => this.downloadfunction(dlinks1, ext, 1)} color="#B40404">
+                    <Button
+                      onPress={() => this.downloadfunction(this.state.dlinks1, this.state.ext, 1)}
+                      color="#B40404">
                       Libgen.lc
                     </Button>
                     <Button
                       disabled={true}
-                      onPress={() => this.downloadfunction(dlinks1, ext, 2)}
+                      onPress={() => this.downloadfunction(this.state.dlinks1, this.state.ext, 2)}
                       color="#B40404">
                       Z-Library
                     </Button>
