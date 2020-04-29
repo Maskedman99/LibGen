@@ -29,7 +29,7 @@ class Fiction1 extends Component {
     imglink: '',
     summary: '',
     ext: '',
-    dlinks1: [],
+    dlinks: [],
     detailsarr: [],
     detailsarr1: [],
     loading: true,
@@ -90,9 +90,7 @@ class Fiction1 extends Component {
         let rows = root.querySelectorAll('tr');
         let desc = root.querySelectorAll('.description');
         let imgrows = root.querySelectorAll('.record_side');
-        let dlinks = root.querySelectorAll('.record_mirrors');
-        let hashes = root.querySelectorAll('.hashes');
-        console.log(hashes);
+        let mirrors = root.querySelectorAll('.record_mirrors');
 
         // Image link Parsing------------------------------------------------------------------------------
         let imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs)
@@ -103,18 +101,22 @@ class Fiction1 extends Component {
         let summary =
           desc.length !== 0 ? JSON.stringify(desc[0].rawText).replace('"SUMMARY:', '') : '';
 
+        //Download Links Parsing--------------------------------------------------------------------------
+        let dlinks = [];
+        mirrors[0].childNodes.map(item => {
+          dlinks.push(JSON.stringify(item.childNodes[0].rawAttrs.replace('href="', '')));
+        });
+
         //Details Parsing----------------------------------------------------------------------------------
         let details = '';
         for (let i = 0; i < rows.length; i++) {
-          details =
-            details +
-            JSON.stringify(
-              rows[i].rawText
-                .replace('\n\t\t', '')
-                .replace('\n\t', '')
-                .replace('\n', '')
-                .replace(/&nbsp;/g, ' ')
-            );
+          details += JSON.stringify(
+            rows[i].rawText
+              .replace('\n\t\t', '')
+              .replace('\n\t', '')
+              .replace('\n', '')
+              .replace(/&nbsp;/g, ' ')
+          );
         }
         let detailsarr = details.split('\\t');
 
@@ -132,28 +134,14 @@ class Fiction1 extends Component {
           detailsarr.splice(3, 0, '');
         }
         let ext = detailsarr[detailsarr.length - 7]; //File Extension
+
         this.setState({
           md5: detailsarr1[1],
-          id: detailsarr[detailsarr.length - 3]
-        });
-
-        //Downlnoad Links Parsing--------------------------------------------------------------------------
-        let dlinks0 = [];
-        dlinks[0].childNodes.pop();
-        dlinks[0].childNodes.pop();
-        dlinks[0].childNodes.shift();
-        dlinks0 = dlinks[0].childNodes;
-
-        let dlinks1 = [];
-        for (let i = 0; i < dlinks0.length; i++) {
-          dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href="', ''));
-        }
-
-        this.setState({
+          id: detailsarr[detailsarr.length - 3],
           imglink: imglink,
           summary: summary,
           ext: ext,
-          dlinks1: dlinks1,
+          dlinks: dlinks,
           detailsarr: detailsarr,
           detailsarr1: detailsarr1,
           loading: false
@@ -214,20 +202,32 @@ class Fiction1 extends Component {
                   <Divider />
                   <Dialog.Content>
                     <Button
-                      onPress={() => this.downloadfunction(this.state.dlinks1, this.state.ext, 0)}
+                      onPress={() => this.downloadfunction(this.state.dlinks, this.state.ext, 0)}
                       color="#B40404">
                       Gen.lib.rus.ec
                     </Button>
                     <Button
-                      onPress={() => this.downloadfunction(this.state.dlinks1, this.state.ext, 1)}
+                      onPress={() => this.downloadfunction(this.state.dlinks, this.state.ext, 1)}
                       color="#B40404">
                       Libgen.lc
                     </Button>
                     <Button
                       disabled={true}
-                      onPress={() => this.downloadfunction(this.state.dlinks1, this.state.ext, 2)}
+                      onPress={() => this.downloadfunction(this.state.dlinks, this.state.ext, 2)}
                       color="#B40404">
                       Z-Library
+                    </Button>
+                    <Button
+                      disabled={true}
+                      onPress={() => this.downloadfunction(this.state.dlinks, this.state.ext, 3)}
+                      color="#B40404">
+                      Libgen.me
+                    </Button>
+                    <Button
+                      disabled={true}
+                      onPress={() => this.downloadfunction(this.state.dlinks, this.state.ext, 4)}
+                      color="#B40404">
+                      Torrrent per 1000 files
                     </Button>
                   </Dialog.Content>
                 </Dialog>
