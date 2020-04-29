@@ -23,7 +23,6 @@ class Fiction1 extends Component {
   state = {
     Title: this.props.navigation.getParam('title', ''),
     Author: this.props.navigation.getParam('author', ''),
-    flag: 0,
     root: '',
     md5: '',
     id: '',
@@ -88,22 +87,24 @@ class Fiction1 extends Component {
       .get(url)
       .then(data => {
         let root = HTMLParser.parse(data.data);
-        var rows = root.querySelectorAll('tr');
-        var desc = root.querySelectorAll('.description');
-        var imgrows = root.querySelectorAll('.record_side');
-        var dlinks = root.querySelectorAll('.record_mirrors');
+        let rows = root.querySelectorAll('tr');
+        let desc = root.querySelectorAll('.description');
+        let imgrows = root.querySelectorAll('.record_side');
+        let dlinks = root.querySelectorAll('.record_mirrors');
+        let hashes = root.querySelectorAll('.hashes');
+        console.log(hashes);
 
         // Image link Parsing------------------------------------------------------------------------------
-        var imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs)
+        let imglink = JSON.stringify(imgrows[0].childNodes[1].rawAttrs)
           .split('\\')[1]
           .replace('"', '');
 
         //Summary Parsing----------------------------------------------------------------------------------
-        var summary =
+        let summary =
           desc.length !== 0 ? JSON.stringify(desc[0].rawText).replace('"SUMMARY:', '') : '';
 
         //Details Parsing----------------------------------------------------------------------------------
-        var details = '';
+        let details = '';
         for (let i = 0; i < rows.length; i++) {
           details =
             details +
@@ -115,7 +116,7 @@ class Fiction1 extends Component {
                 .replace(/&nbsp;/g, ' ')
             );
         }
-        var detailsarr = details.split('\\t');
+        let detailsarr = details.split('\\t');
 
         for (let i = 0; i < detailsarr.length; i++) {
           if (detailsarr[i] === '' || detailsarr[i] === '\\n') {
@@ -126,30 +127,24 @@ class Fiction1 extends Component {
         detailsarr.pop();
         detailsarr.pop();
         detailsarr.pop();
-        var detailsarr1 = detailsarr.splice(0, 14);
+        let detailsarr1 = detailsarr.splice(0, 14);
         if (this.state.Author === '') {
           detailsarr.splice(3, 0, '');
         }
-        var ext = detailsarr[detailsarr.length - 7]; //File Extension
-        if (this.state.flag === 0) {
-          this.setState({
-            md5: detailsarr1[1],
-            id: detailsarr[detailsarr.length - 3]
-          });
-        }
+        let ext = detailsarr[detailsarr.length - 7]; //File Extension
+        this.setState({
+          md5: detailsarr1[1],
+          id: detailsarr[detailsarr.length - 3]
+        });
 
         //Downlnoad Links Parsing--------------------------------------------------------------------------
-        var dlinks0 = [];
-        if (this.state.flag === 0) {
-          // if not present every time the screen renders the values change.
-          dlinks[0].childNodes.pop();
-          dlinks[0].childNodes.pop();
-          dlinks[0].childNodes.shift();
-          this.setState({flag: 1});
-        }
+        let dlinks0 = [];
+        dlinks[0].childNodes.pop();
+        dlinks[0].childNodes.pop();
+        dlinks[0].childNodes.shift();
         dlinks0 = dlinks[0].childNodes;
 
-        var dlinks1 = [];
+        let dlinks1 = [];
         for (let i = 0; i < dlinks0.length; i++) {
           dlinks1[i] = JSON.stringify(dlinks0[i].childNodes[0].rawAttrs.replace('href="', ''));
         }
