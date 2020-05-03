@@ -1,14 +1,17 @@
 import React from 'react';
 import {Text, TouchableRipple} from 'react-native-paper';
 import {View, StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
-const MagList = ({data, links, nav}) => {
+const MagList = ({data, links}) => {
+  const navigation = useNavigation();
+
   return data.map((item, key) => (
     <View style={styles.container}>
       <TouchableRipple
         rippleColor="#B40404"
         onPress={() =>
-          nav.navigate('Mag1Screen', {
+          navigation.navigate('MagDetails', {
             link: links[key],
             title: item
           })

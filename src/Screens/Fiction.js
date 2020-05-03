@@ -57,13 +57,7 @@ export class Fiction extends Component {
         var found = true;
         if (result.length > 1) {
           found = false;
-          return (
-            <DialogComponent
-              nav={this.props.navigation}
-              title="File not Found"
-              content="Retype your search query!"
-            />
-          );
+          return <DialogComponent title="File not Found" content="Retype your search query!" />;
         }
 
         let titles = [];
@@ -123,7 +117,6 @@ export class Fiction extends Component {
     return (
       <PaperProvider>
         <NavBar
-          nav={this.props.navigation}
           title={'Fiction'}
           subtitle={`${this.state.searchQuery}\t\t.\t\t${this.state.searchIn}`}
         />
@@ -143,7 +136,6 @@ export class Fiction extends Component {
                 F={this.state.file}
                 La={this.state.language}
                 Li={this.state.links}
-                nav={this.props.navigation}
               />
               {this.state.pageinfo[0].childNodes[3] === undefined ? ( //Case of 1 page results and multi page results
                 <Text style={styles.endText}>End of Results!!</Text>

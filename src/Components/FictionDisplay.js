@@ -1,15 +1,18 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 import KeyValueText from './Common/KeyValueText';
 
-const FictionDisplay = ({T, S, A, F, Li, La, nav}) => {
+const FictionDisplay = ({T, S, A, F, Li, La}) => {
+  const navigation = useNavigation();
+
   return T.map((item, key) => (
     <TouchableRipple
       style={styles.container}
       onPress={() =>
-        nav.navigate('Fiction1Screen', {
+        navigation.navigate('FictionDetails', {
           link: Li[key],
           title: S[key].replace(/"/g, ''),
           author: A[key].replace(/"/g, '')

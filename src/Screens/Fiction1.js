@@ -22,6 +22,7 @@ class Fiction1 extends Component {
   state = {
     Title: this.props.route.params?.title ?? '',
     Author: this.props.route.params?.author ?? '',
+    link: this.props.route.params?.link ?? '',
     root: '',
     md5: '',
     id: '',
@@ -79,7 +80,7 @@ class Fiction1 extends Component {
   }
 
   componentDidMount() {
-    let url = `http://gen.lib.rus.ec${this.props.route.params?.link ?? ''.replace(/"/g, '')}`;
+    let url = `http://gen.lib.rus.ec${this.state.link.replace(/"/g, '')}`;
     axios
       .get(url)
       .then(response => {
@@ -102,7 +103,7 @@ class Fiction1 extends Component {
   render() {
     return (
       <PaperProvider>
-        <NavBar nav={this.props.navigation} title={this.state.Title} subtitle={this.state.Author} />
+        <NavBar title={this.state.Title} subtitle={this.state.Author} />
         {this.state.loading ? (
           <Spinner />
         ) : (

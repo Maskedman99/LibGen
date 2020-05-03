@@ -17,8 +17,8 @@ import NavBar from '../Components/Common/NavBar';
 
 export class Scimag extends Component {
   state = {
-    searchQuery: 'hello',
-    searchIn: 'All',
+    searchQuery: this.props.route.params?.search ?? '',
+    searchIn: this.props.route.params?.sIn ?? 'All',
     page: 1,
     loading: true,
     url: '',
@@ -26,13 +26,8 @@ export class Scimag extends Component {
   };
 
   componentDidMount() {
-    const {navigation} = this.props;
-    const search = navigation.getParam('search', '');
-    const searchin = navigation.getParam('sIn', 'All');
-    this.setState({searchQuery: search, searchIn: searchin});
-
     axios
-      .get('http://gen.lib.rus.ec/scimag/?q=' + search.replace(' ', '+'))
+      .get('http://gen.lib.rus.ec/scimag/?q=' + this.state.searchQuery.replace(' ', '+'))
       .then(data =>
         this.setState({
           root: HTMLParser.parse(data.data),
@@ -48,7 +43,6 @@ export class Scimag extends Component {
     return (
       <PaperProvider>
         <NavBar
-          nav={this.props.navigation}
           title={'Scientific Articles'}
           subtitle={`${this.state.searchQuery}\t\t.\t\t${this.state.searchIn}`}
         />

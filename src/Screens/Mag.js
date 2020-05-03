@@ -8,11 +8,11 @@ import NavBar from '../Components/Common/NavBar';
 import useAxios from '../Components/Logic/useAxios';
 import magazineParser from '../Components/Logic/magazineParser';
 
-const Mag = ({navigation}) => {
+const Mag = ({route}) => {
   const [loading, setLoading] = useState(true);
   const [titles, setTitles] = useState([]);
   const [links, setLinks] = useState([]);
-  const searchQuery = navigation.getParam('search', '');
+  const searchQuery = route.params?.search ?? '';
 
   let data = [];
   data = useAxios(`http://magzdb.org/makelist?t=${searchQuery.replace(' ', '+')}`);
@@ -26,7 +26,7 @@ const Mag = ({navigation}) => {
 
   return (
     <PaperProvider>
-      <NavBar nav={navigation} title={'Magazine'} subtitle={searchQuery} />
+      <NavBar title={'Magazine'} subtitle={searchQuery} />
       {loading ? (
         <Spinner />
       ) : (
@@ -35,7 +35,7 @@ const Mag = ({navigation}) => {
             <Text style={styles.textStyle}>{`Files Found: ${links.length}`}</Text>
           </View>
           <ScrollView style={styles.bottomContainer}>
-            <MagList data={titles} links={links} nav={navigation} />
+            <MagList data={titles} links={links} />
           </ScrollView>
         </View>
       )}

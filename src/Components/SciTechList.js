@@ -5,7 +5,7 @@ import {View, StyleSheet} from 'react-native';
 import KeyValueText from './Common/KeyValueText';
 
 const SciTechList = ({details}) => {
-  return details.map((item, key) => (
+  return details.map(item => (
     <View style={styles.container}>
       <TouchableRipple onPress={() => console.log('Pressed')} rippleColor="#B40404">
         <View style={styles.innerContainer}>

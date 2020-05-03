@@ -4,10 +4,10 @@ import {Provider as PaperProvider} from 'react-native-paper';
 
 import NavBar from '../Components/Common/NavBar';
 
-export const Downloads = ({navigation}) => {
+export const Downloads = () => {
   return (
     <PaperProvider>
-      <NavBar nav={navigation} title={'Downloads'} />
+      <NavBar title={'Downloads'} />
       <ScrollView />
     </PaperProvider>
   );

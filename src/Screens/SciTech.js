@@ -13,10 +13,10 @@ import NavBar from '../Components/Common/NavBar';
 
 export class SciTech extends Component {
   state = {
-    searchQuery: this.props.navigation.getParam('search', ''),
-    currPage: 1,
-    searchIn: this.props.navigation.getParam('sIn', 'All'),
+    searchQuery: this.props.route.params?.search ?? '',
+    searchIn: this.props.route.params?.sIn ?? 'All',
     loading: true,
+    currPage: 1,
     root: ''
   };
 
@@ -106,7 +106,6 @@ export class SciTech extends Component {
     return (
       <PaperProvider>
         <NavBar
-          nav={this.props.navigation}
           title={'LibGen (Sci-Tech)'}
           subtitle={`${this.state.searchIn}\t\t.\t\t${this.state.searchQuery}`}
         />

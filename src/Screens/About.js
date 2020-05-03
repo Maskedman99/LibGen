@@ -12,7 +12,7 @@ import {
 import txt from '../Assets/aboutInfos.json';
 import NavBar from '../Components/Common/NavBar';
 
-const Credits = ({navigation}) => {
+const Credits = () => {
   const [visibleTC, setVisibleTC] = useState(false);
   const [visibleCredits, setVisibleCredits] = useState(false);
   const [visibleDialog, setVisibleDialog] = useState(false);
@@ -26,7 +26,7 @@ const Credits = ({navigation}) => {
 
   return (
     <PaperProvider>
-      <NavBar nav={navigation} title={'Abouut'} />
+      <NavBar title={'Abouut'} />
 
       <TouchableRipple onPress={_showCredits} rippleColor="#B40404">
         <Text style={styles.text}>Credits</Text>
