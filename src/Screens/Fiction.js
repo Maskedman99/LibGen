@@ -14,8 +14,8 @@ export class Fiction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchQuery: this.props.navigation.getParam('search', ''),
-      searchIn: this.props.navigation.getParam('sIn', 'All'),
+      searchQuery: this.props.route.params?.search ?? '',
+      searchIn: this.props.route.params?.sIn ?? 'All',
       page: 1,
       loading: true,
       url: '',

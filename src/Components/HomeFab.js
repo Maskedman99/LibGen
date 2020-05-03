@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import {StyleSheet, Share} from 'react-native';
 import {FAB, Portal} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
-const HomeFab = ({nav}) => {
+const HomeFab = () => {
+  const navigation = useNavigation();
   const [open, setOpen] = useState(false);
+
   return (
     <Portal>
       <FAB.Group
@@ -36,19 +39,19 @@ const HomeFab = ({nav}) => {
             icon: 'information-variant',
             label: 'About',
             color: '#B40404',
-            onPress: () => nav.navigate('AboutScreen')
+            onPress: () => navigation.navigate('About')
           },
           {
             icon: 'settings',
             label: 'Settings',
             color: '#B40404',
-            onPress: () => nav.navigate('SettingScreen')
+            onPress: () => navigation.navigate('Settings')
           },
           {
             icon: 'file-download',
             label: 'Downloads',
             color: '#B40404',
-            onPress: () => nav.navigate('DownloadsScreen')
+            onPress: () => navigation.navigate('Downloads')
           }
         ]}
         onStateChange={() => setOpen(!open)}

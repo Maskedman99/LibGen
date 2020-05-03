@@ -21,29 +21,29 @@ import HomeFab from '../Components/HomeFab';
 
 const onSubmitSearch = (nav, genre, query, category) => {
   genre === 'scitech'
-    ? nav.navigate('SciTechScreen', {
+    ? nav.navigate('SciTech', {
         search: query,
         sIn: category
       })
     : genre === 'fiction'
-    ? nav.navigate('FictionScreen', {
+    ? nav.navigate('Fiction', {
         search: query,
         sIn: category
       })
     : genre === 'comics'
-    ? nav.navigate('ComicsScreen', {
+    ? nav.navigate('Comics', {
         search: query
       })
     : genre === 'scimag'
-    ? nav.navigate('ScimagScreen', {
+    ? nav.navigate('Scimag', {
         search: query,
         sIn: category
       })
     : genre === 'mag'
-    ? nav.navigate('MagScreen', {
+    ? nav.navigate('Mag', {
         search: query
       })
-    : nav.navigate('SettingScreen');
+    : nav.navigate('Settings');
 };
 
 const Home = ({navigation}) => {
@@ -159,7 +159,7 @@ const Home = ({navigation}) => {
           </View>
         </RadioButton.Group>
       </ScrollView>
-      <HomeFab nav={navigation} />
+      <HomeFab />
     </PaperProvider>
   );
 };

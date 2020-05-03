@@ -1,5 +1,7 @@
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import React from 'react';
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Settings from './src/Screens/Settings';
 import Home from './src/Screens/Home';
@@ -13,30 +15,26 @@ import Scimag from './src/Screens/Scimag';
 import Mag from './src/Screens/Mag';
 import Mag1 from './src/Screens/Mag1';
 
-const AppNavigator = createStackNavigator({
-  HomeScreen: {screen: Home, navigationOptions: {headerShown: false}},
+const Stack = createStackNavigator();
 
-  SettingScreen: {screen: Settings, navigationOptions: {headerShown: false}},
-
-  AboutScreen: {screen: About, navigationOptions: {headerShown: false}},
-
-  DownloadsScreen: {screen: Downloads, navigationOptions: {headerShown: false}},
-
-  FictionScreen: {screen: Fiction, navigationOptions: {headerShown: false}},
-
-  Fiction1Screen: {screen: Fiction1, navigationOptions: {headerShown: false}},
-
-  ComicsScreen: {screen: Comics, navigationOptions: {headerShown: false}},
-
-  SciTechScreen: {screen: SciTech, navigationOptions: {headerShown: false}},
-
-  ScimagScreen: {screen: Scimag, navigationOptions: {headerShown: false}},
-
-  MagScreen: {screen: Mag, navigationOptions: {headerShown: false}},
-
-  Mag1Screen: {screen: Mag1, navigationOptions: {headerShown: false}},
-});
-
-const App = createAppContainer(AppNavigator);
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" headerMode="none">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="About" component={About} />
+        <Stack.Screen name="Downloads" component={Downloads} />
+        <Stack.Screen name="Fiction" component={Fiction} />
+        <Stack.Screen name="FictionDetails" component={Fiction1} />
+        <Stack.Screen name="Comics" component={Comics} />
+        <Stack.Screen name="SciTech" component={SciTech} />
+        <Stack.Screen name="Scimag" component={Scimag} />
+        <Stack.Screen name="Mag" component={Mag} />
+        <Stack.Screen name="MagDetails" component={Mag1} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default App;

@@ -20,8 +20,8 @@ import fictionDetailsParser from '../Components/Logic/fictionDetailsParser';
 
 class Fiction1 extends Component {
   state = {
-    Title: this.props.navigation.getParam('title', ''),
-    Author: this.props.navigation.getParam('author', ''),
+    Title: this.props.route.params?.title ?? '',
+    Author: this.props.route.params?.author ?? '',
     root: '',
     md5: '',
     id: '',
@@ -79,9 +79,7 @@ class Fiction1 extends Component {
   }
 
   componentDidMount() {
-    let url = `http://gen.lib.rus.ec${this.props.navigation
-      .getParam('link', '')
-      .replace(/"/g, '')}`;
+    let url = `http://gen.lib.rus.ec${this.props.route.params?.link ?? ''.replace(/"/g, '')}`;
     axios
       .get(url)
       .then(response => {
