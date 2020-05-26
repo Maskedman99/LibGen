@@ -30,7 +30,7 @@
     "util": "0.12.3"
   },
   "devDependencies": {
-    "@babel/core": "7.9.6",
+    "@babel/core": "7.10.0",
     "@babel/runtime": "7.9.6",
     "@react-native-community/eslint-config": "1.1.0",
     "babel-jest": "26.0.1",
