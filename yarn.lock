@@ -5759,10 +5759,10 @@ react-native-reanimated@^1.8.0:
   dependencies:
     fbjs "^1.0.0"
 
-react-native-safe-area-context@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-0.7.3.tgz#ad6bd4abbabe195332c53810e4ce5851eb21aa2a"
-  integrity sha512-9Uqu1vlXPi+2cKW/CW6OnHxA76mWC4kF3wvlqzq4DY8hn37AeiXtLFs2WkxH4yXQRrnJdP6ivc65Lz+MqwRZAA==
+react-native-safe-area-context@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-2.0.3.tgz#d89b60336ea2a1e9e2ff64fcac7b226aea0af370"
+  integrity sha512-KMYfJNLyPEFnYbpZiViqa9wHqVXZdZTebhs4tGER8YPvLRc4Qp7mUSfhDVnlNG/xG1denO1ehTAZQZ1fogxJeg==
 
 react-native-safe-area-view@^0.14.9:
   version "0.14.9"
