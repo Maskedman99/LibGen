@@ -17,7 +17,7 @@
     "axios": "^0.19.2",
     "fast-html-parser": "^1.0.1",
     "react": "16.13.1",
-    "react-native": "0.62.1",
+    "react-native": "0.63.0",
     "react-native-gesture-handler": "1.6.1",
     "react-native-image-progress": "^1.1.1",
     "react-native-paper": "3.10.1",
